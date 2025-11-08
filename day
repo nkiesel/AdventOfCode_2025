@@ -1,0 +1,39 @@
+#!/bin/zsh
+
+# set TZ so that we get the correct day within the first 24 hours of the published puzzle
+export TZ=America/New_York
+
+# The URL uses un-padded day numbers, but we use 0-padded day numbers for the code and input file names.
+# Thus, we build 2 day variables
+dd=${1:-$(date '+%d')}
+d=$dd
+[[ "${d[1]}" -eq 0 ]] && d="${dd[2]}"
+[[ ${#dd} -eq 1 ]] && dd="0$dd"
+
+input="input/Day$dd.txt"
+url="https://adventofcode.com/2025/day/$d/input"
+dir="src/test/kotlin"
+template="$dir/Template.kt"
+code="$dir/Day$dd.kt"
+session="session"
+
+if [[ ! -s "$code" ]]; then
+  sed -e "s/Template/Day$dd/g" "$template" > "$code"
+  git add "$code"
+fi
+
+# The input is not the same for all participants, and we thus must pass our session cookie when downloading. If you need
+# to renew the cookie, log into the web site, then copy the session cookie value from the "Storage" tab of "Web
+# Developer Tools" into the session file.
+if [[ ! -s "$input" ]]; then
+  if [[ ! -s "$session" ]]; then
+    echo "Login to the Aoc website https://adventofcode.com/ and then save the 'session' cookie value in the '$session' file"
+    exit 1
+  fi
+
+  if ! https --download --verify=no --output="$input" "$url" "Cookie:session=$(< $session)" >& /dev/null; then
+    echo "Login to the Aoc website https://adventofcode.com/ and then update the '$session' file with the 'session' cookie value"
+    exit 1
+  fi
+fi
+less "$input"
