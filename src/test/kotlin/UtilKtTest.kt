@@ -2,7 +2,7 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.FunSpec
-import java.net.URL
+import java.math.BigInteger
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
@@ -24,14 +24,24 @@ class UtilKtTest : FunSpec({
 
     test("powerSetSeq") {
         val s = setOf("A", "B", "C")
+
         val ps1 = s.powerSetSeq().toList()
+        ps1.size shouldBe 2.0.pow(s.size).toInt()
+
         val ps2 = s.powerSet().toList()
         ps1 shouldBe ps2
     }
 
     test("permutations") {
-        println(listOf("a", "b", "c").permutations().toList())
-        listOf("a", "b", "c").permutations().toList() shouldHaveSize 6
+        val list = listOf("a", "b", "c")
+        val permutations = list.permutations().toList()
+        println(permutations)
+        permutations shouldHaveSize list.size.factorial().toInt()
+    }
+
+    test("factorial") {
+        6.factorial().toInt() shouldBe 720
+        25.factorial() shouldBe BigInteger("15511210043330985984000000")
     }
 
     test("neighbors4") {
@@ -110,6 +120,8 @@ class UtilKtTest : FunSpec({
         gcd(10, 10) shouldBe 10
         gcd(101, 103) shouldBe 1
         gcd(101 * 3, 103 * 6) shouldBe 3
+        gcd(0, 5) shouldBe 5
+        gcd(5, 0) shouldBe 5
     }
 
     test("numbers") {

@@ -22,9 +22,21 @@ fun <T> List<T>.permutations(): Sequence<List<T>> = sequence {
         val i = (indices.size - 2 downTo 0).firstOrNull { indices[it] < indices[it + 1] } ?: break
         var j = i + 1
         for (k in i + 2 until indices.size) if (indices[k] in indices[i]..indices[j]) j = k
-        indices[i] = indices[j].also { indices[j] = indices[i] }
+        indices.swap(i, j)
         indices.reverse(i + 1, indices.size)
     }
+}
+
+fun IntArray.swap(i: Int, j: Int) {
+    this[i] = this[j].also { this[j] = this[i] }
+}
+
+fun Int.factorial(): BigInteger {
+    var result = BigInteger.ONE
+    for (i in 1..this) {
+        result = result.multiply(i.toBigInteger())
+    }
+    return result
 }
 
 // Called "bars and stars" in combinatorial math
