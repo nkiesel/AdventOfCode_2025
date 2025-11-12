@@ -108,11 +108,12 @@ fun <T> List<T>.chunkedBy(predicate: (T) -> Boolean): List<List<T>> =
  * the counts w/o generating new map entries.
  */
 class CountingMap<T>(
-    l: List<T> = emptyList(),
+    list: List<T> = emptyList(),
+    init: Int = 1,
     private val m: MutableMap<T, MutableLong> = mutableMapOf()
 ) : MutableMap<T, CountingMap.MutableLong> by m {
     init {
-        l.forEach { inc(it) }
+        list.forEach { set(it, init) }
     }
 
     data class MutableLong(var value: Long)
@@ -125,11 +126,11 @@ class CountingMap<T>(
         m.getOrPut(k) { MutableLong(0L) }.value += amount
     }
 
-    fun set(k: T, amount: Long) {
+    operator fun set(k: T, amount: Long) {
         m.getOrPut(k) { MutableLong(0L) }.value = amount
     }
 
-    fun set(k: T, amount: Int) {
+    operator fun set(k: T, amount: Int) {
         m.getOrPut(k) { MutableLong(0L) }.value = amount.toLong()
     }
 

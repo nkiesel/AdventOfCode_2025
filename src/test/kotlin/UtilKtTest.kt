@@ -67,7 +67,12 @@ class UtilKtTest : FunSpec({
         map.count("a") shouldBe 2L
         map.count("d") shouldBe 0L
 
-        map.entries().sumOf { it.value } shouldBe 6
+        map.entries().sumOf { it.value } shouldBe 6L
+
+        map.set("a", 5)
+        map.count("a") shouldBe 5L
+        map["a"] = 7L
+        map.count("a") shouldBe 7L
     }
 
     test("countingMapWithInit") {
@@ -81,7 +86,21 @@ class UtilKtTest : FunSpec({
         map.count("a") shouldBe 3L
         map.count("d") shouldBe 1L
 
-        map.entries().sumOf { it.value } shouldBe 10
+        map.entries().sumOf { it.value } shouldBe 10L
+    }
+
+    test("countingMapWithInitAndStart") {
+        val map = CountingMap(listOf("a", "b", "c", "d"), 0)
+        map.inc("a")
+        map.inc("b")
+        map.inc("c", 3L)
+        map.inc("a")
+
+        map shouldHaveSize 4
+        map.count("a") shouldBe 2L
+        map.count("d") shouldBe 0L
+
+        map.entries().sumOf { it.value } shouldBe 6L
     }
 
     test("gcd") {
@@ -107,6 +126,7 @@ class UtilKtTest : FunSpec({
         lcm(10, 10) shouldBe 10
         lcm(101, 103) shouldBe 101 * 103
         lcm(101 * 3, 103 * 6) shouldBe 101 * 103 * 6
+        listOf(2, 3, 4, 5, 6, 9, 10, 12, 100, 150).reduce { a, b -> lcm(a, b) } shouldBe 900
     }
 
     test("minMax") {
