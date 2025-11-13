@@ -44,6 +44,7 @@ enum class Direction {
             '<' -> W
             else -> error("Char '$char' cannot be converted to a Direction")
         }
+
         fun from(d: String) = when (d.lowercase()) {
             "n" -> N
             "ne" -> NE
@@ -54,21 +55,20 @@ enum class Direction {
             "w" -> W
             "nw" -> NW
             else -> error("Unexpected direction $d")
-
         }
     }
 }
 
 data class Point(val x: Int, val y: Int) : Comparable<Point> {
     fun move(d: Direction, n: Int = 1) = when (d) {
-        Direction.N -> Point(x, y - n)
-        Direction.NE -> Point(x + n, y - n)
-        Direction.E -> Point(x + n, y)
-        Direction.SE -> Point(x + n, y + n)
-        Direction.S -> Point(x, y + n)
-        Direction.SW -> Point(x - n, y + n)
-        Direction.W -> Point(x - n, y)
-        Direction.NW -> Point(x - n, y - n)
+        N -> move(0, -n)
+        NE -> move(n, -n)
+        E -> move(0, n)
+        SE -> move(n, n)
+        S -> move(0, n)
+        SW -> move(-n, n)
+        W -> move(-n, 0)
+        NW -> move(-n, -n)
     }
 
     fun move(dx: Int, dy: Int) = Point(x + dx, y + dy)
@@ -116,11 +116,11 @@ class CharArea(private val area: Array<CharArray>) {
 
     operator fun get(x: Int, y: Int) = area[y][x]
 
+    operator fun get(p: Point) = get(p.x, p.y)
+
     fun getOrNull(x: Int, y: Int) = if (valid(x, y)) get(x, y) else null
 
     fun getOrNull(p: Point) = if (valid(p)) get(p) else null
-
-    operator fun get(p: Point) = get(p.x, p.y)
 
     fun valid(x: Int, y: Int) = x in xRange && y in yRange
 
@@ -134,7 +134,7 @@ class CharArea(private val area: Array<CharArray>) {
         if (valid(x, y)) area[y][x] = c
     }
 
-    fun set(x: Int, y: Int, c: (Char) -> Char) {
+    operator fun set(x: Int, y: Int, c: (Char) -> Char) {
         if (valid(x, y)) area[y][x] = c(area[y][x])
     }
 
@@ -218,7 +218,7 @@ class CharArea(private val area: Array<CharArray>) {
     }
 
     override fun toString(): String {
-        return area.joinToString("\n") { it.joinToString("") }
+        return area.joinToString("\n") { it.concatToString() }
     }
 
     override fun hashCode(): Int {
