@@ -59,6 +59,15 @@ enum class Direction {
     }
 }
 
+@JvmInline
+value class LongPos(val value: Long) {
+    constructor(x: Int, y: Int): this((x.toLong() shl 32) or (y.toLong() and 0xFFFF_FFFFL))
+    override fun toString() = "[$x,$y]"
+}
+
+val LongPos.x get() = value.shr(32).toInt()
+val LongPos.y get() = (value and 0xFFFF_FFFFL).toInt()
+
 data class Point(val x: Int, val y: Int) : Comparable<Point> {
     fun move(d: Direction, n: Int = 1) = when (d) {
         N -> move(0, -n)

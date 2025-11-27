@@ -178,4 +178,17 @@ class UtilKtTest : FunSpec({
         manhattanDistance(intArrayOf(0, 0), intArrayOf(1, 2)) shouldBe 3
         manhattanDistance(longArrayOf(0L, 0L), longArrayOf(1L, 2L)) shouldBe 3L
     }
+
+    test("LongPos") {
+        val p1 = LongPos(11, 42)
+        p1.x shouldBe 11
+        p1.y shouldBe 42
+        val p2 = LongPos(p1.value)
+        p1.x shouldBe 11
+        p1.y shouldBe 42
+        p1 shouldBe p2
+        val p3 = LongPos(-3, -5)
+        p3.x shouldBe -3
+        p3.y shouldBe -5
+    }
 })
