@@ -16,6 +16,8 @@ object Day01 {
         return zeros
     }
 
+    fun oneA(input: List<String>): Int = parse(input).runningFold(50) { dial, r -> (dial + r) % 100 }.count { it == 0 }
+
     fun two(input: List<String>): Int {
         var dial = 50
         var zeros = 0
@@ -48,7 +50,9 @@ object Day01Test : FunSpec({
     with(Day01) {
         test("one") {
             one(sample) shouldBe 3
+            oneA(sample) shouldBe 3
             one(input) shouldBe 1172
+            oneA(input) shouldBe 1172
         }
 
         test("two") {
@@ -68,4 +72,8 @@ check if the number is 0:
       if (dial == 0) zeros++
   }
  But then I thought that this would be too expensive for an input like "R9999999".
+
+After thinking a bit more about part1, I also added `oneA` which uses `runningFold`: shorter code, but a bit harder to
+understand. However, `runningFold` returns a sequence and not alist, and thus this code does not create a second list
+of the same length as the input list.
  */
