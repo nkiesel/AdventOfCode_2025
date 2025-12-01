@@ -22,9 +22,7 @@ object Day01 {
         for (n in parse(input)) {
             zeros += abs(n) / 100
             dial += n % 100
-            if (dial == 0 || dial >= 100 || dial < 0 && dial != n % 100) {
-                zeros++
-            }
+            if (dial == 0 || dial >= 100 || dial < 0 && dial != n % 100) zeros++
             dial = (dial + 100) % 100
         }
         return zeros
