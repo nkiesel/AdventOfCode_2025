@@ -7,25 +7,25 @@ object Day01 {
     private fun parse(input: List<String>) = input.map { dir[it[0]]!! * it.substring(1).toInt() }
 
     fun one(input: List<String>): Int {
-        var num = 50
+        var dial = 50
         var zeros = 0
         for (n in parse(input)) {
-            num = (num + n) % 100
-            if (num == 0) zeros++
+            dial = (dial + n) % 100
+            if (dial == 0) zeros++
         }
         return zeros
     }
 
     fun two(input: List<String>): Int {
-        var num = 50
+        var dial = 50
         var zeros = 0
         for (n in parse(input)) {
             zeros += abs(n) / 100
-            num += n % 100
-            if (num == 0 || num >= 100 || num < 0 && num != n % 100) {
+            dial += n % 100
+            if (dial == 0 || dial >= 100 || dial < 0 && dial != n % 100) {
                 zeros++
             }
-            num = (num + 100) % 100
+            dial = (dial + 100) % 100
         }
         return zeros
     }
@@ -59,3 +59,15 @@ object Day01Test : FunSpec({
         }
     }
 })
+
+/*
+Part 1 was of course very simple as expected, but part 2 again took a few minutes more than expected. The issue was that
+even if the resulting dial number is negative (i.e. a left turn of more than the current dial number), it only crossed
+0 if it did not start at 0. I first implemented then to turn the dial for "num" steps into the direction, and every time
+check if the number is 0:
+  repeat(abs(n)) {
+      dial = (dial + n.sign + 100) % 100
+      if (dial == 0) zeros++
+  }
+ But then I thought that this would be too expensive for an input like "R9999999".
+ */
