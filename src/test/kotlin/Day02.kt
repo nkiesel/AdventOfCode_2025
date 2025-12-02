@@ -3,14 +3,14 @@ import io.kotest.matchers.shouldBe
 
 object Day02 {
     private fun parse(input: List<String>) =
-        input[0].split(',').map { it.split('-').map { it.toLong() }.let { it[0]..it[1] } }
+        input[0].split(',').map { it.split('-').map { it.toLong() }.let { (s, e) -> s..e } }
 
     fun one(input: List<String>): Long = three(input, Regex("""(\d+)\1"""))
 
     fun two(input: List<String>): Long = three(input, Regex("""(\d+)\1+"""))
 
     private fun three(input: List<String>, rx: Regex) =
-        parse(input).flatMap { r -> r.filter { rx.matches(it.toString()) } }.sum()
+        parse(input).sumOf { r -> r.filter { rx.matches(it.toString()) }.sum() }
 }
 
 object Day02Test : FunSpec({
