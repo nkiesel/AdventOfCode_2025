@@ -3,7 +3,7 @@ import io.kotest.matchers.shouldBe
 
 object Day02 {
     private fun parse(input: List<String>) =
-        input[0].split(',').map { it.split('-').map { it.toLong() }.let { (s, e) -> s..e } }
+        input[0].split(',').map { it.split('-').let { (s, e) -> s.toLong()..e.toLong() } }
 
     fun one(input: List<String>): Long = three(input, Regex("""(\d+)\1"""))
 
