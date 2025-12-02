@@ -10,7 +10,7 @@ object Day02 {
     fun two(input: List<String>): Long = three(input, Regex("""(\d+)\1+"""))
 
     private fun three(input: List<String>, rx: Regex) =
-        parse(input).sumOf { r -> r.filter { rx.matches(it.toString()) }.sum() }
+        parse(input).flatMap { r -> r.filter { rx.matches(it.toString()) } }.distinct().sum()
 }
 
 object Day02Test : FunSpec({
@@ -35,4 +35,8 @@ object Day02Test : FunSpec({
 
 /*
 Much simpler than Day 1!!! Regular expressions are such a powerful helper!
+
+Update: when reading the description once more, I realized that it said to return the sum of all invalid numbers. So
+if the same invalid number would be produced by 2 ranges, should we sum both of them?  I don't think so, so added
+a `.distinct()` in my code.  This id not make a difference for my input, but still looks more correct to me.
 */
