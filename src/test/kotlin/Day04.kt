@@ -2,20 +2,20 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
 object Day04 {
-    private fun CharArea.liftable(p: Point) = neighbors8(p, '@').size < 4
+    private fun CharArea.removable(p: Point) = neighbors8(p, '@').size < 4
 
     fun one(input: List<String>): Int {
         val area = CharArea(input)
-        return area.tiles { it == '@' }.count { area.liftable(it) }
+        return area.tiles('@').count { area.removable(it) }
     }
 
     fun two(input: List<String>): Int {
         val area = CharArea(input)
         var removed = 0
         do {
-            val removable = area.tiles { it == '@' }.filter { area.liftable(it) }.toList()
-            removed += removable.size
+            val removable = area.tiles('@').filter { area.removable(it) }.toList()
             removable.forEach { area[it] = '.' }
+            removed += removable.size
         } while (removable.isNotEmpty())
         return removed
     }

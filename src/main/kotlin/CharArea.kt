@@ -151,6 +151,8 @@ class CharArea(private val area: Array<CharArray>) {
         set(p.x, p.y, c)
     }
 
+    fun tiles(c: Char): Sequence<Point> = tiles { it == c }
+
     fun tiles(condition: Condition? = null): Sequence<Point> = sequence {
         for (x in xRange) {
             for (y in yRange) {
