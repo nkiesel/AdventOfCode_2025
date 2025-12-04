@@ -2,23 +2,22 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
 object Day04 {
-    private fun parse(input: List<String>) = CharArea(input)
+    private fun CharArea.liftable(p: Point) = neighbors8(p, '@').size < 4
 
     fun one(input: List<String>): Int {
-        val area = parse(input)
-        return area.tiles { it == '@' }.count { area.neighbors8(it, '@').size < 4 }
+        val area = CharArea(input)
+        return area.tiles { it == '@' }.count { area.liftable(it) }
     }
 
     fun two(input: List<String>): Int {
-        val area = parse(input)
+        val area = CharArea(input)
         var removed = 0
         while (true) {
-            val removable = area.tiles { it == '@' }.filter { area.neighbors8(it, '@').size < 4 }.toList()
-            if (removable.isEmpty()) break
+            val removable = area.tiles { it == '@' }.filter { area.liftable(it) }.toList()
+            if (removable.isEmpty()) return removed
             removed += removable.size
             removable.forEach { area[it] = '.' }
         }
-        return removed
     }
 }
 
