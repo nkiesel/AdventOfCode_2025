@@ -1,5 +1,6 @@
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import kotlin.text.indexOf
 
 object Day03 {
     private fun parse(input: List<String>) = input
@@ -26,6 +27,19 @@ object Day03 {
             num.joinToString(separator = "").toLong()
         }
     }
+
+    fun three(input: List<String>, digits: Int): Long {
+        return parse(input).sumOf { l ->
+            var startIndex = 0
+            var num = 0L
+            for (i in 1..digits) {
+                val char = l.substring(startIndex, l.length - digits + i).max()
+                startIndex = l.indexOf(char, startIndex) + 1
+                num = num * 10 + char.digitToInt()
+            }
+            num
+        }
+    }
 }
 
 object Day03Test : FunSpec({
@@ -42,11 +56,21 @@ object Day03Test : FunSpec({
         test("one") {
             one(sample) shouldBe 357
             one(input) shouldBe 17412
+            three(sample, 2) shouldBe 357
+            three(input, 2) shouldBe 17412
         }
 
         test("two") {
             two(sample) shouldBe 3121910778619L
             two(input) shouldBe 172681562473501L
+            three(sample, 12) shouldBe 3121910778619L
+            three(input, 12) shouldBe 172681562473501L
         }
     }
 })
+
+/*
+Struggled a bit with part 2, but then realized that this could be made more generic and efficient, which resulted
+in `three`. I initially did not realize that `"23512".max() == '5'`, but of course Kotlin always allows to interpret
+a string as a collection of chars, and therefore no need to use `"23512".toList().max()`.
+ */
