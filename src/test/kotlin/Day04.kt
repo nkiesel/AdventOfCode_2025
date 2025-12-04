@@ -12,12 +12,12 @@ object Day04 {
     fun two(input: List<String>): Int {
         val area = CharArea(input)
         var removed = 0
-        while (true) {
+        do {
             val removable = area.tiles { it == '@' }.filter { area.liftable(it) }.toList()
-            if (removable.isEmpty()) return removed
             removed += removable.size
             removable.forEach { area[it] = '.' }
-        }
+        } while (removable.isNotEmpty())
+        return removed
     }
 }
 
