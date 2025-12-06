@@ -285,6 +285,9 @@ fun String.longs() = Regex("""-?\d+""").findAll(this).map { it.value.toLong() }.
 infix fun Int.delta(other: Int) = abs(this - other)
 infix fun Long.delta(other: Long) = abs(this - other)
 
+fun List<Int>.times() = reduce(Int::times)
+fun List<Long>.times() = reduce(Long::times)
+
 enum class Part { ONE, TWO }
 
 private val md: MessageDigest = MessageDigest.getInstance("MD5")
