@@ -279,18 +279,26 @@ fun Collection<Int>.multiReduce(vararg transformers: (Int, Int) -> Int): List<In
     return drop(1).fold(start) { acc, i -> acc.mapIndexed { index, a -> transformers[index](i, a) } }
 }
 
-fun String.ints() = Regex("""-?\d+""").findAll(this).map { it.value.toInt() }.toList()
-fun String.longs() = Regex("""-?\d+""").findAll(this).map { it.value.toLong() }.toList()
+fun String.ints(withNegative: Boolean = true) = Regex(if (withNegative) """-?\d+""" else """\d+""")
+    .findAll(this)
+    .map { it.value.toInt() }
+    .toList()
+
+fun String.longs(withNegative: Boolean = true) = Regex(if (withNegative) """-?\d+""" else """\d+""")
+    .findAll(this)
+    .map { it.value.toLong() }
+    .toList()
 
 infix fun Int.delta(other: Int) = abs(this - other)
 infix fun Long.delta(other: Long) = abs(this - other)
 
-fun List<Int>.times() = reduce(Int::times)
-fun List<Long>.times() = reduce(Long::times)
+fun List<Int>.product() = reduceOrNull(Int::times) ?: 0
+fun List<Long>.product() = reduceOrNull(Long::times) ?: 0
 
 enum class Part { ONE, TWO }
 
-private val md: MessageDigest = MessageDigest.getInstance("MD5")
+private
+val md: MessageDigest = MessageDigest.getInstance("MD5")
 
 fun String.md5(): String {
     return BigInteger(1, md.digest(this.toByteArray())).toString(16).padStart(32, '0')

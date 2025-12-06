@@ -12,7 +12,7 @@ object Day05 {
             if (line.isEmpty()) {
                 range = false
             } else if (range) {
-                line.split('-').let { ranges += it[0].toLong()..it[1].toLong() }
+                line.longs(false).let { ranges += it[0]..it[1] }
             } else {
                 ingredients += line.toLong()
             }

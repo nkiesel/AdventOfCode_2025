@@ -11,7 +11,7 @@ object Day06 {
         return ops.withIndex().sumOf {
             when (it.value) {
                 '+' -> nums[it.index].sum()
-                '*' -> nums[it.index].times()
+                '*' -> nums[it.index].product()
                 else -> error("unsupported op")
             }
         }
@@ -28,7 +28,7 @@ object Day06 {
             val op = ops[x--]
             sum += when (op) {
                 '+' -> nums.sum()
-                '*' -> nums.times()
+                '*' -> nums.product()
                 else -> continue
             }
             nums.clear()
