@@ -24,19 +24,15 @@ object Day06 {
         val ops = input.last()
         var x = ops.lastIndex
         while (x >= 0) {
-            val num = indices.map { input[it][x] }.joinToString("").trim().toLong()
-            nums += num
-            val op = ops[x]
-            if (op != ' ') {
-                sum += when (op) {
-                    '+' -> nums.sum()
-                    '*' -> nums.times()
-                    else -> error("unsupported op")
-                }
-                nums.clear()
-                // skip over empty column
-                x--
+            nums += indices.map { input[it][x] }.joinToString("").trim().toLong()
+            val op = ops[x--]
+            sum += when (op) {
+                '+' -> nums.sum()
+                '*' -> nums.times()
+                else -> continue
             }
+            nums.clear()
+            // skip over empty column
             x--
         }
         return sum
