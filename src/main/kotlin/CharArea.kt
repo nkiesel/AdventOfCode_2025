@@ -72,7 +72,7 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
     fun move(d: Direction, n: Int = 1) = when (d) {
         N -> move(0, -n)
         NE -> move(n, -n)
-        E -> move(0, n)
+        E -> move(n, 0)
         SE -> move(n, n)
         S -> move(0, n)
         SW -> move(-n, n)
