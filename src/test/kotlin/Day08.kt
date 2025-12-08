@@ -84,7 +84,7 @@ object Day08Test : FunSpec({
 })
 
 /*
-I first got both gold starts by always finding the closest not connected yet boxes. But that of course computed
+I first got both gold stars by always finding the closest not connected yet boxes. But that of course computed
 the distance between boxes a lot or times, and that code ran for 30 seconds.  Then I thought about it more and
 came up with the current solution: compute the distances between all boxes once and store it in a list sorted by
 the distance.  Then the code simply iterates over that list and computes the circuits. This now runs in less than
