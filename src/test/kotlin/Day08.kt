@@ -4,9 +4,8 @@ import io.kotest.matchers.shouldBe
 object Day08 {
     private data class P3(val x: Int, val y: Int, val z: Int) {
         constructor(l: List<Int>) : this(l[0], l[1], l[2])
-
-        private fun p2(n: Int) = n.toLong() * n
         fun distance(o: P3) = p2(x - o.x) + p2(y - o.y) + p2(z - o.z)
+        private fun p2(n: Int) = n.toLong() * n
     }
 
     fun three(input: List<String>, part: Part, rep: Int = 1000): Int {
@@ -23,17 +22,17 @@ object Day08 {
         var connections = 0
         while (true) {
             val (b1, b2) = boxPairs[connections]
-            val c1 = circuits.first { it.contains(b1) }
-            val c2 = circuits.first { it.contains(b2) }
+            val c1 = circuits.first { b1 in it }
+            val c2 = circuits.first { b2 in it }
             if (c1 != c2) {
-                if (part == Part.TWO && circuits.size == 2) {
+                if (part == TWO && circuits.size == 2) {
                     return b1.x * b2.x
                 }
-                c1.addAll(c2)
+                c1 += c2
                 circuits.remove(c2)
             }
             connections++
-            if (part == Part.ONE && connections == rep) {
+            if (part == ONE && connections == rep) {
                 return circuits.map { it.size }.sorted().takeLast(3).product()
             }
         }
@@ -68,13 +67,13 @@ object Day08Test : FunSpec({
 
     with(Day08) {
         test("one") {
-            three(sample, Part.ONE, 10) shouldBe 40
-            three(input, Part.ONE, 1000) shouldBe 163548
+            three(sample, ONE, 10) shouldBe 40
+            three(input, ONE, 1000) shouldBe 163548
         }
 
         test("two") {
-            three(sample, Part.TWO) shouldBe 25272
-            three(input, Part.TWO) shouldBe 772452514
+            three(sample, TWO) shouldBe 25272
+            three(input, TWO) shouldBe 772452514
         }
     }
 })
@@ -83,6 +82,6 @@ object Day08Test : FunSpec({
 I first got both gold stars by always finding the closest not connected yet boxes. But that of course computed
 the distance between boxes a lot or times, and that code ran for 30 seconds.  Then I thought about it more and
 came up with the current solution: compute the distances between all boxes once and store it in a list sorted by
-the distance.  Then the code simply iterates over that list and computes the circuits. This now runs in less than
+the distance.  The code now simply iterates over that list and computes the circuits. This now runs in less than
 1 second for both parts.
  */
