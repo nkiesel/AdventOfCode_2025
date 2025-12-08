@@ -12,9 +12,8 @@ object Day08 {
     fun three(input: List<String>, part: Part, rep: Int = 1000): Int {
         val boxes = input.map { P3(it.ints()) }
         val circuits = boxes.map { mutableSetOf(it) }.toMutableList()
-        val distances = buildMap {
-            for (i1 in boxes.indices) {
-                val b1 = boxes[i1]
+        val boxPairs = buildMap {
+            for ((i1, b1) in boxes.withIndex()) {
                 for (i2 in i1 + 1 until boxes.size) {
                     val b2 = boxes[i2]
                     put(listOf(b1, b2), b1.distance(b2))
@@ -23,7 +22,7 @@ object Day08 {
         }.entries.sortedBy { it.value }.map { it.key }
         var connections = 0
         while (true) {
-            val (b1, b2) = distances[connections]
+            val (b1, b2) = boxPairs[connections]
             val c1 = circuits.first { it.contains(b1) }
             val c2 = circuits.first { it.contains(b2) }
             if (c1 != c2) {
