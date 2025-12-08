@@ -1,14 +1,12 @@
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import kotlin.math.pow
-import kotlin.math.sqrt
 
 object Day08 {
-    private data class P3(val x: Double, val y: Double, val z: Double) {
-        constructor(l: List<Int>) : this(l[0].toDouble(), l[1].toDouble(), l[2].toDouble())
+    private data class P3(val x: Int, val y: Int, val z: Int) {
+        constructor(l: List<Int>) : this(l[0], l[1], l[2])
 
-        fun distance(o: P3) =
-            sqrt((x - o.x).pow(2) + (y - o.y).pow(2) + (z - o.z).pow(2))
+        private fun p2(n: Int) = n.toLong() * n
+        fun distance(o: P3) = p2(x - o.x) + p2(y - o.y) + p2(z - o.z)
     }
 
     fun three(input: List<String>, part: Part, rep: Int = 1000): Int {
@@ -22,16 +20,15 @@ object Day08 {
                     put(listOf(b1, b2), b1.distance(b2))
                 }
             }
-        }.entries.sortedBy { it.value }
+        }.entries.sortedBy { it.value }.map { it.key }
         var connections = 0
         while (true) {
-            val shortest = distances[connections]
-            val (b1, b2) = shortest.key
+            val (b1, b2) = distances[connections]
             val c1 = circuits.first { it.contains(b1) }
             val c2 = circuits.first { it.contains(b2) }
             if (c1 != c2) {
                 if (part == Part.TWO && circuits.size == 2) {
-                    return b1.x.toInt() * b2.x.toInt()
+                    return b1.x * b2.x
                 }
                 c1.addAll(c2)
                 circuits.remove(c2)
