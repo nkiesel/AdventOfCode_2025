@@ -1,4 +1,3 @@
-import com.sun.org.apache.xalan.internal.xsltc.compiler.Template
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
