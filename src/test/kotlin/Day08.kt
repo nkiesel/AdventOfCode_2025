@@ -29,7 +29,7 @@ object Day08 {
                     return b1.x * b2.x
                 }
                 c1 += c2
-                circuits.remove(c2)
+                circuits -= c2
             }
             connections++
             if (part == ONE && connections == rep) {
