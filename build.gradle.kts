@@ -17,7 +17,7 @@ dependencies {
 
 tasks.test {
     minHeapSize = "1g"
-    maxHeapSize = "30g"
+    maxHeapSize = "40g"
     testLogging.showStandardStreams = true
     filter {
         setIncludePatterns("*Test", "Day*")
