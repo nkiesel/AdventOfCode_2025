@@ -63,10 +63,12 @@ enum class Direction {
 value class LongPos(val value: Long) {
     constructor(x: Int, y: Int): this((x.toLong() shl 32) or (y.toLong() and 0xFFFF_FFFFL))
     override fun toString() = "[$x,$y]"
+    operator fun component1() = value.shr(32).toInt()
+    operator fun component2() = (value and 0xFFFF_FFFFL).toInt()
 }
 
-val LongPos.x get() = value.shr(32).toInt()
-val LongPos.y get() = (value and 0xFFFF_FFFFL).toInt()
+val LongPos.x get() = component1()
+val LongPos.y get() = component2()
 
 data class Point(val x: Int, val y: Int) : Comparable<Point> {
     fun move(d: Direction, n: Int = 1) = when (d) {
