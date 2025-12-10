@@ -1,6 +1,5 @@
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 import kotlin.math.max
 import kotlin.math.min
 
@@ -21,70 +20,87 @@ object Day09 {
     }
 
     fun two(input: List<String>): Long {
-        val red = parse(input).map { LongPos(it.x, it.y) }
-        println("#red: ${red.size}")
+        val red = parse(input)
+        val minX = red.minOf { it.x }
+        val maxX = red.maxOf { it.x }
+        val minY = red.minOf { it.y }
+        val maxY = red.maxOf { it.y }
+        val rowSets = (minY..maxY).associateWith { y -> mutableSetOf<Int>() }
+        val colSets = (minX..maxX).associateWith { y -> mutableSetOf<Int>() }
+
+        println("red: ${red.size}")
         val green = buildList {
+            var dir = '.'
             for ((p1, p2) in (red + red[0]).zipWithNext()) {
                 if (p1.x == p2.x) {
                     for (y in min(p1.y, p2.y) + 1 until max(p1.y, p2.y)) {
-                        add(LongPos(p1.x, y))
+                        add(Point(p1.x, y))
+                        rowSets[y]!! += p1.x
                     }
+                    if (dir == '|') {
+                        rowSets[p1.y]!! += p1.x
+                    }
+                    dir = '|'
                 } else if (p1.y == p2.y) {
                     for (x in min(p1.x, p2.x) + 1 until max(p1.x, p2.x)) {
-                        add(LongPos(x, p1.y))
+                        add(Point(x, p1.y))
+                        colSets[x]!! += p1.y
                     }
-                } else {
-                    error("not properly connected $p1 and $p2")
+                    if (dir == '-') {
+                        colSets[p1.x]!! += p1.y
+                    }
+                    dir = '-'
                 }
             }
         }
 
         if (red.size < 100) {
             val area = CharArea(red.maxOf { it.x } + 3, red.maxOf { it.y } + 2, '.')
-            green.forEach { area[Point(it.x, it.y)] = 'X' }
-            red.forEach { area[Point(it.x, it.y)] = '#' }
+            green.forEach { area[it] = 'X' }
+            red.forEach { area[it] = '#' }
             area.show()
         }
 
         val redOrGreen = (red + green).toSet()
-        println("#redOrGreen: ${redOrGreen.size}")
+        println("redOrGreen: ${redOrGreen.size}")
 
-        val minY = red.minOf { it.y }
-        val maxY = red.maxOf { it.y }
-        val rows =
-            (minY..maxY).associateWith { y -> redOrGreen.filter { it.y == y }.map { it.x }.sorted().distinct() }
+        val rows = rowSets.mapValues { r -> r.value.sorted().toList() }
+        val cols = colSets.mapValues { r -> r.value.sorted().toList() }
 
-        fun isRedOrGreen(p: LongPos): Boolean {
+        fun isRedOrGreen(p: Point): Boolean {
             if (p in redOrGreen) return true
             val (x, y) = p
+            if (x !in minX..maxX || y !in minY..maxY) return false
             val rx = rows[y]
-            return rx != null && x >= rx.first() && x <= rx.last() && rx.count { it > x } % 2 == 1
+            val ry = cols[x]
+            return rx != null && ry != null && (rx.count { it > x } % 2 == 1 || rx.count { it < x } % 2 == 1) && (ry.count { it > y } % 2 == 1 || ry.count { it < y } % 2 == 1)
         }
 
-        val xRanges = mutableMapOf<LongPos, IntRange>()
-        val yRanges = mutableMapOf<LongPos, IntRange>()
+        val xRanges = mutableMapOf<Point, IntRange>()
+        val yRanges = mutableMapOf<Point, IntRange>()
         for (p in red) {
             val (x, y) = p
             var x1 = x
-            do x1-- while (isRedOrGreen(LongPos(x1, y)))
+            do x1-- while (isRedOrGreen(Point(x1, y)))
             var x2 = x
-            do x2++ while (isRedOrGreen(LongPos(x2, y)))
+            do x2++ while (isRedOrGreen(Point(x2, y)))
             var y1 = y
-            do y1-- while (isRedOrGreen(LongPos(x, y1)))
+            do y1-- while (isRedOrGreen(Point(x, y1)))
             var y2 = y
-            do y2++ while (isRedOrGreen(LongPos(x, y2)))
+            do y2++ while (isRedOrGreen(Point(x, y2)))
             xRanges[p] = IntRange(x1 + 1, x2 - 1)
             yRanges[p] = IntRange(y1 + 1, y2 - 1)
         }
-//        for (r in xRanges) {
-//            println("x ${r.key}: ${r.value}")
-//        }
-//        for (r in yRanges) {
-//            println("y ${r.key}: ${r.value}")
-//        }
 
-        fun allRedOrGreen(p1: LongPos, p2: LongPos): Boolean {
+        fun allRedOrGreen(p1: Point, p2: Point): Boolean {
             return p1.x in xRanges[p2]!! && p1.y in yRanges[p2]!! && p2.x in xRanges[p1]!! && p2.y in yRanges[p1]!!
+        }
+
+        if (red.size < 100) {
+            val area = CharArea(red.maxOf { it.x } + 3, red.maxOf { it.y } + 2, '.')
+            area.tiles().filter { isRedOrGreen(it) }.forEach { area[it] = '*' }
+            red.forEach { area[it] = '#' }
+            area.show()
         }
 
         val recs = buildMap {
@@ -96,7 +112,7 @@ object Day09 {
                 }
             }
         }.entries.sortedByDescending { it.value }
-        println("#recs: ${recs.size}")
+        println("recs: ${recs.size}")
         recs.forEach { (p, size) ->
             if (allRedOrGreen(p.first, p.second)) {
                 println("p1: ${p.first} p2: ${p.second} size: $size")
@@ -113,6 +129,7 @@ object Day09Test : FunSpec({
     val sample = """
         7,1
         11,1
+        11,4
         11,7
         9,7
         9,5
@@ -122,16 +139,22 @@ object Day09Test : FunSpec({
     """.trimIndent().lines()
     val sample2 = """
         1,1
-        1,3
+        4,1
+        4,3
+        7,3
+        7,1
+        8,1
+        8,3
+        8,5
         1,5
-        2,5
-        2,1
-        2,2
-        2,3
+    """.trimIndent().lines()
+    val sample3 = """
+        1,1
+        5,1
         5,3
-        5,5
-        5,6
-        1,6
+        2,3
+        2,20
+        1,20
     """.trimIndent().lines()
 
     with(Day09) {
@@ -142,10 +165,13 @@ object Day09Test : FunSpec({
 
         test("two") {
             println("-".repeat(50))
-            two(sample2) shouldBe 20L
             two(sample) shouldBe 24L
             println("-".repeat(50))
-            two(input) shouldNotBe 267043150L
+            two(sample2) shouldBe 24L
+            println("-".repeat(50))
+            two(sample3) shouldBe 40L
+            println("-".repeat(50))
+            two(input) shouldBe 1450414119L
         }
     }
 })
