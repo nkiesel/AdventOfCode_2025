@@ -27,6 +27,12 @@ object Day12 {
         val (shapes, regions) = parse(input)
         return regions.count { r -> r.fits(shapes) }
     }
+
+    fun oneA(input: List<String>) = input.joinToString()
+        .ints()
+        .drop(6)
+        .chunked(8) { r -> r[0] * r[1] >= r.drop(2).sum() * 9 }
+        .count { it }
 }
 
 object Day12Test : FunSpec({
@@ -35,6 +41,7 @@ object Day12Test : FunSpec({
     with(Day12) {
         test("one") {
             one(input) shouldBe 557
+            oneA(input) shouldBe 557
         }
     }
 })
