@@ -14,7 +14,6 @@ tasks.test {
     minHeapSize = "1g"
     maxHeapSize = "40g"
     testLogging.showStandardStreams = true
-    failOnNoDiscoveredTests.set(false)
     // the useJUnitPlatform is required for running `./gradlew test`, but is not required for running
     // `./gradlew kotest`
     useJUnitPlatform()
@@ -30,10 +29,11 @@ kotlin {
         suppressWarnings = true
         freeCompilerArgs.set(
             listOf(
-                "-Xcontext-sensitive-resolution",
-                "-Xcontext-parameters",
-                "-Xnested-type-aliases",
-            )
+                "context-sensitive-resolution",
+                "context-parameters",
+                "nested-type-aliases",
+                "explicit-backing-fields",
+            ).map { "-X$it" }
         )
     }
 

@@ -1,11 +1,9 @@
 #!/bin/zsh
 
-# set TZ so that we get the correct day within the first 24 hours of the published puzzle
-export TZ=America/New_York
-
 # The URL uses un-padded day numbers, but we use 0-padded day numbers for the code and input file names.
 # Thus, we build 2 day variables
-dd=${1:-$(date '+%d')}
+# set TZ so that we get the correct day within the first 24 hours of the published puzzle
+dd=${1:-$(TZ=America/New_York date '+%d')}
 d=$dd
 [[ "${d[1]}" -eq 0 ]] && d="${dd[2]}"
 [[ ${#dd} -eq 1 ]] && dd="0$dd"
