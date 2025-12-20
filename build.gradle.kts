@@ -15,11 +15,12 @@ tasks.test {
     maxHeapSize = "40g"
     testLogging.showStandardStreams = true
     failOnNoDiscoveredTests.set(false)
+    // the useJUnitPlatform is required for running `./gradlew test`, but is not required for running
+    // `./gradlew kotest`
     useJUnitPlatform()
-//    classpath += sourceSets["test"].output.classesDirs
-//    filter {
-//        setIncludePatterns("*Test", "Day*")
-//    }
+    filter {
+        setIncludePatterns("*Test", "Day*")
+    }
 }
 
 kotlin {
