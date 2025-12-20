@@ -10,22 +10,20 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation(libs.kotest.assertions.core)
-    implementation(libs.kotest)
-}
-
 tasks.test {
     minHeapSize = "1g"
     maxHeapSize = "40g"
     testLogging.showStandardStreams = true
-    filter {
-        setIncludePatterns("*Test", "Day*")
-    }
+    failOnNoDiscoveredTests.set(false)
+    useJUnitPlatform()
+//    classpath += sourceSets["test"].output.classesDirs
+//    filter {
+//        setIncludePatterns("*Test", "Day*")
+//    }
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(25)
     @Suppress("UnsafeCompilerArguments")
     compilerOptions {
         suppressWarnings = true
@@ -36,5 +34,15 @@ kotlin {
                 "-Xnested-type-aliases",
             )
         )
+    }
+
+    sourceSets {
+        test {
+            dependencies {
+                implementation(libs.kotest.framework.engine)
+                implementation(libs.kotest.runner.junit5)
+                implementation(libs.kotest.assertions.core)
+            }
+        }
     }
 }

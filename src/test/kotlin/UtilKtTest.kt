@@ -1,7 +1,7 @@
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import io.kotest.core.spec.style.FunSpec
 import java.math.BigInteger
 import kotlin.math.max
 import kotlin.math.min
@@ -122,6 +122,8 @@ class UtilKtTest : FunSpec({
         gcd(101 * 3, 103 * 6) shouldBe 3
         gcd(0, 5) shouldBe 5
         gcd(5, 0) shouldBe 5
+        gcd(listOf(2, 4, 8)) shouldBe 2
+        gcdL(listOf(2L, 4L, 8L)) shouldBe 2L
     }
 
     test("numbers") {
@@ -139,6 +141,7 @@ class UtilKtTest : FunSpec({
         lcm(101, 103) shouldBe 101 * 103
         lcm(101 * 3, 103 * 6) shouldBe 101 * 103 * 6
         listOf(2, 3, 4, 5, 6, 9, 10, 12, 100, 150).reduce { a, b -> lcm(a, b) } shouldBe 900
+        lcm(listOf(2, 3, 4, 5, 6, 9, 10, 12, 100, 150)) shouldBe 900
     }
 
     test("minMax") {

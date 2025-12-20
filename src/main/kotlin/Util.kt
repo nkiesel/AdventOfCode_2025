@@ -164,20 +164,36 @@ class CountingMap<T>(
  */
 tailrec fun gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
 
+fun gcd(ints: List<Int>): Int = ints.reduce { acc, i -> gcd(acc, i) }
+
+fun gcd(ints: IntArray): Int = ints.reduce { acc, i -> gcd(acc, i) }
+
 /**
  * greatest common divisor of 2 Long values
  */
 tailrec fun gcd(a: Long, b: Long): Long = if (b == 0L) a else gcd(b, a % b)
+
+fun gcdL(longs: List<Long>): Long = longs.reduce { acc, i -> gcd(acc, i) }
+
+fun gcdL(longs: LongArray): Long = longs.reduce { acc, i -> gcd(acc, i) }
 
 /**
  * least common multiple of 2 Int values
  */
 fun lcm(a: Int, b: Int): Int = a / gcd(a, b) * b
 
+fun lcm(ints: List<Int>): Int = ints.reduce { acc, i -> lcm(acc, i) }
+
+fun lcm(ints: IntArray): Int = ints.reduce { acc, i -> lcm(acc, i) }
+
 /**
  * least common multiple of 2 Long values
  */
 fun lcm(a: Long, b: Long): Long = a / gcd(a, b) * b
+
+fun lcmL(longs: List<Long>): Long = longs.reduce { acc, i -> lcm(acc, i) }
+
+fun lcmL(longs: LongArray): Long = longs.reduce { acc, i -> lcm(acc, i) }
 
 /**
  * Manhattan distance in a 2-dimensional array is the distance between 2 points moving only horizontally or vertically
