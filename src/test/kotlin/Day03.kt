@@ -1,6 +1,5 @@
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import kotlin.text.indexOf
 
 object Day03 {
     private fun parse(input: List<String>) = input
@@ -19,7 +18,9 @@ object Day03 {
             val digits = l.toMutableList()
             val num = mutableListOf<Char>()
             while (num.size < 12) {
-                val n = ('9' downTo '0').first { d -> digits.indexOf(d).let { it != -1 && it <= digits.size + num.size - 12 } }
+                val n = ('9' downTo '0').first { d ->
+                    digits.indexOf(d).let { it != -1 && it <= digits.size + num.size - 12 }
+                }
                 num.add(n)
                 digits.subList(0, digits.indexOf(n) + 1).clear()
             }
@@ -31,13 +32,10 @@ object Day03 {
     fun three(input: List<String>, digits: Int): Long {
         return parse(input).sumOf { l ->
             var startIndex = 0
-            var num = 0L
-            for (i in 1..digits) {
-                val char = l.substring(startIndex, l.length - digits + i).max()
-                startIndex = l.indexOf(char, startIndex) + 1
-                num = num * 10 + char.digitToInt()
-            }
-            num
+            val endIndex = l.length - digits
+            (1..digits).map { i ->
+                l.substring(startIndex, endIndex + i).max().also { startIndex = l.indexOf(it, startIndex) + 1 }
+            }.joinToString(separator = "").toLong()
         }
     }
 }
