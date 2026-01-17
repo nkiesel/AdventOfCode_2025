@@ -2,19 +2,14 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
 object Day03 {
-    private fun parse(input: List<String>) = input
-
-    fun one(input: List<String>): Int {
-        return parse(input).sumOf { l ->
-            val f = ('9' downTo '0').first { l.indexOf(it).let { i -> i != -1 && i != l.lastIndex } }
-            val fi = l.indexOf(f)
-            val s = ('9' downTo '0').first { l.indexOf(it, fi + 1) != -1 }
-            "$f$s".toInt()
-        }
+    fun one(input: List<String>) = input.sumOf { l ->
+        val f = l.dropLast(1).max()
+        val s = l.substring(l.indexOf(f) + 1).max()
+        "$f$s".toInt()
     }
 
     fun two(input: List<String>): Long {
-        return parse(input).sumOf { l ->
+        return input.sumOf { l ->
             val digits = l.toMutableList()
             val num = mutableListOf<Char>()
             while (num.size < 12) {
@@ -30,7 +25,7 @@ object Day03 {
     }
 
     fun three(input: List<String>, digits: Int): Long {
-        return parse(input).sumOf { l ->
+        return input.sumOf { l ->
             var startIndex = 0
             val endIndex = l.length - digits
             (1..digits).map { i ->

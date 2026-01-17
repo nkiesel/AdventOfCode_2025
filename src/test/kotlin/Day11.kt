@@ -5,26 +5,9 @@ object Day11 {
     private fun parse(input: List<String>) =
         input.associate { it.substringBefore(":") to it.substringAfter(": ").split(" ") }
 
-    fun one(input: List<String>): Int {
-        val devs = parse(input)
-        val paths = mutableListOf<List<String>>()
-        paths.add(mutableListOf("you"))
-        while (true) {
-            val next = paths.filter { it.last() != "out" }
-            if (next.isEmpty()) return paths.size
-            for (n in next) {
-                paths.remove(n)
-                devs[n.last()]!!.forEach { p -> paths.add(n + p) }
-            }
-        }
-    }
-
-    fun oneA(input: List<String>): Long = with(parse(input)) { return count("you", "out") }
-
     private data class Path(val dev: String, val count: Long)
 
-    context(devs: Map<String, List<String>>)
-    private fun count(start: String, end: String): Long {
+    private fun count(devs: Map<String, List<String>>, start: String, end: String): Long {
         var paths = listOf(Path(start, 1))
         var count = 0L
         while (true) {
@@ -40,9 +23,11 @@ object Day11 {
         }
     }
 
-    fun two(input: List<String>): Long = with(parse(input)) {
-        return count("svr", "dac") * count("dac", "fft") * count("fft", "out") +
-                count("svr", "fft") * count("fft", "dac") * count("dac", "out")
+    fun one(input: List<String>): Int = count(parse(input), "you", "out").toInt()
+
+    fun two(input: List<String>): Long = parse(input).let { devs ->
+        count(devs, "svr", "dac") * count(devs, "dac", "fft") * count(devs, "fft", "out") +
+                count(devs, "svr", "fft") * count(devs, "fft", "dac") * count(devs, "dac", "out")
     }
 }
 
@@ -82,7 +67,6 @@ object Day11Test : FunSpec({
         test("one") {
             one(sample) shouldBe 5
             one(input) shouldBe 719
-            oneA(input) shouldBe 719L
         }
 
         test("two") {

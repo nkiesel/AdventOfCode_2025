@@ -67,14 +67,10 @@ object Day09 {
         val rows = rowSets.mapValues { r -> r.value.sorted().toList() }
         val cols = colSets.mapValues { r -> r.value.sorted().toList() }
 
-        fun isRedOrGreen(p: Point): Boolean {
-            if (p in redOrGreen) return true
-            val (x, y) = p
-            if (x !in minX..maxX || y !in minY..maxY) return false
-            val rx = rows[y]
-            val ry = cols[x]
-            return rx != null && ry != null && (rx.count { it > x } % 2 == 1 || rx.count { it < x } % 2 == 1) && (ry.count { it > y } % 2 == 1 || ry.count { it < y } % 2 == 1)
-        }
+        fun odd(list: List<Int>, v: Int) = list.count { it < v } % 2 == 1 || list.count { it > v } % 2 == 1
+
+        fun isRedOrGreen(p: Point) =
+            p in redOrGreen || p.x in minX..maxX && p.y in minY..maxY && odd(rows[p.y]!!, p.x) && odd(cols[p.x]!!, p.y)
 
         val xRanges = mutableMapOf<Point, IntRange>()
         val yRanges = mutableMapOf<Point, IntRange>()

@@ -5,19 +5,9 @@ import kotlin.math.min
 
 object Day05 {
     private fun parse(input: List<String>): Pair<Set<LongRange>, Set<Long>> {
-        var range = true
-        val ranges = mutableSetOf<LongRange>()
-        val ingredients = mutableSetOf<Long>()
-        input.forEach { line ->
-            if (line.isEmpty()) {
-                range = false
-            } else if (range) {
-                line.longs(false).let { ranges += it[0]..it[1] }
-            } else {
-                ingredients += line.toLong()
-            }
-        }
-        return ranges to ingredients
+        val ranges = input.filter { '-' in it }.map { r -> r.longs(false).let { it[0]..it[1] } }
+        val ingredients = input.mapNotNull { it.toLongOrNull() }
+        return ranges.toSet() to ingredients.toSet()
     }
 
     fun one(input: List<String>): Int {
