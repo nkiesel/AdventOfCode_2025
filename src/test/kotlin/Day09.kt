@@ -28,7 +28,7 @@ object Day09 {
         val rowSets = (minY..maxY).associateWith { y -> mutableSetOf<Int>() }
         val colSets = (minX..maxX).associateWith { y -> mutableSetOf<Int>() }
 
-        println("red: ${red.size}")
+//        println("red: ${red.size}")
         val green = buildList {
             var dir = '.'
             for ((p1, p2) in (red + red[0]).zipWithNext()) {
@@ -54,15 +54,15 @@ object Day09 {
             }
         }
 
-        if (red.size < 100) {
-            val area = CharArea(red.maxOf { it.x } + 3, red.maxOf { it.y } + 2, '.')
-            green.forEach { area[it] = 'X' }
-            red.forEach { area[it] = '#' }
-            area.show()
-        }
+//        if (red.size < 100) {
+//            val area = CharArea(red.maxOf { it.x } + 3, red.maxOf { it.y } + 2, '.')
+//            green.forEach { area[it] = 'X' }
+//            red.forEach { area[it] = '#' }
+//            area.show()
+//        }
 
         val redOrGreen = (red + green).toSet()
-        println("redOrGreen: ${redOrGreen.size}")
+//        println("redOrGreen: ${redOrGreen.size}")
 
         val rows = rowSets.mapValues { r -> r.value.sorted().toList() }
         val cols = colSets.mapValues { r -> r.value.sorted().toList() }
@@ -92,12 +92,12 @@ object Day09 {
             return p1.x in xRanges[p2]!! && p1.y in yRanges[p2]!! && p2.x in xRanges[p1]!! && p2.y in yRanges[p1]!!
         }
 
-        if (red.size < 100) {
-            val area = CharArea(red.maxOf { it.x } + 3, red.maxOf { it.y } + 2, '.')
-            area.tiles().filter { isRedOrGreen(it) }.forEach { area[it] = '*' }
-            red.forEach { area[it] = '#' }
-            area.show()
-        }
+//        if (red.size < 100) {
+//            val area = CharArea(red.maxOf { it.x } + 3, red.maxOf { it.y } + 2, '.')
+//            area.tiles().filter { isRedOrGreen(it) }.forEach { area[it] = '*' }
+//            red.forEach { area[it] = '#' }
+//            area.show()
+//        }
 
         val recs = buildMap {
             for ((i, p1) in red.withIndex()) {
@@ -108,10 +108,10 @@ object Day09 {
                 }
             }
         }.entries.sortedByDescending { it.value }
-        println("recs: ${recs.size}")
+//        println("recs: ${recs.size}")
         recs.forEach { (p, size) ->
             if (allRedOrGreen(p.first, p.second)) {
-                println("p1: ${p.first} p2: ${p.second} size: $size")
+//                println("p1: ${p.first} p2: ${p.second} size: $size")
                 return size
             }
         }
@@ -160,13 +160,13 @@ object Day09Test : FunSpec({
         }
 
         test("two") {
-            println("-".repeat(50))
+//            println("-".repeat(50))
             two(sample) shouldBe 24L
-            println("-".repeat(50))
+//            println("-".repeat(50))
             two(sample2) shouldBe 24L
-            println("-".repeat(50))
+//            println("-".repeat(50))
             two(sample3) shouldBe 40L
-            println("-".repeat(50))
+//            println("-".repeat(50))
             two(input) shouldBe 1450414119L
         }
     }
