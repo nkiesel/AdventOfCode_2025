@@ -1,4 +1,4 @@
-import io.kotest.core.spec.style.FunSpec
+import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.matchers.shouldBe
 import kotlin.math.abs
 
@@ -31,7 +31,7 @@ object Day01 {
     }
 }
 
-object Day01Test : FunSpec({
+val Day01Test by testSuite {
     val input = lines("Day01")
 
     val sample = """
@@ -60,7 +60,7 @@ object Day01Test : FunSpec({
             two(input) shouldBe 6932
         }
     }
-})
+}
 
 /*
 Part 1 was of course very simple as expected, but part 2 again took a few minutes more than expected. The issue was that
