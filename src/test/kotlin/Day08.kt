@@ -1,4 +1,4 @@
-import io.kotest.core.spec.style.FunSpec
+import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.matchers.shouldBe
 
 object Day08 {
@@ -39,7 +39,7 @@ object Day08 {
     }
 }
 
-object Day08Test : FunSpec({
+val Day08Test by testSuite {
     val input = lines("Day08")
 
     val sample = """
@@ -76,7 +76,7 @@ object Day08Test : FunSpec({
             three(input, TWO) shouldBe 772452514
         }
     }
-})
+}
 
 /*
 I first got both gold stars by always finding the closest not connected yet boxes. But that of course computed

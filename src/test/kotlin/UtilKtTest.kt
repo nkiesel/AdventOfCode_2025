@@ -1,4 +1,4 @@
-import io.kotest.core.spec.style.FunSpec
+import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -8,7 +8,7 @@ import kotlin.math.min
 import kotlin.math.pow
 import kotlin.time.measureTimedValue
 
-class UtilKtTest : FunSpec({
+val UtilKtTest  by testSuite {
     test("powerSet") {
         val s = setOf("A", "B", "C")
         val ps = s.powerSet().filter { it.isNotEmpty() && it.size != s.size }
@@ -194,4 +194,4 @@ class UtilKtTest : FunSpec({
         p3.x shouldBe -3
         p3.y shouldBe -5
     }
-})
+}

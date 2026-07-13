@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotest)
     alias(libs.plugins.versions.update)
     alias(libs.plugins.testballon)
 }
@@ -17,7 +16,7 @@ tasks.test {
     testLogging.showStandardStreams = true
     // the useJUnitPlatform is required for running `./gradlew test`, but is not required for running
     // `./gradlew kotest`
-    useJUnitPlatform()
+//    useJUnitPlatform()
     filter {
         setIncludePatterns("*Test", "Day*")
     }
@@ -41,10 +40,9 @@ kotlin {
     sourceSets {
         test {
             dependencies {
-                implementation(libs.kotest.framework.engine)
-                implementation(libs.kotest.runner.junit5)
-                implementation(libs.kotest.assertions.core)
                 implementation(libs.testballon.framework.core)
+                implementation(libs.testBalloon.integration.kotest.assertions)
+                implementation(libs.kotest.assertions.core)
             }
         }
     }

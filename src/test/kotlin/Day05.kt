@@ -1,4 +1,4 @@
-import io.kotest.core.spec.style.FunSpec
+import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.matchers.shouldBe
 import kotlin.math.max
 import kotlin.math.min
@@ -34,7 +34,7 @@ object Day05 {
     }
 }
 
-object Day05Test : FunSpec({
+val Day05Test by testSuite {
     val input = lines("Day05")
 
     val sample = """
@@ -62,7 +62,7 @@ object Day05Test : FunSpec({
             two(input) shouldBe 355555479253787L
         }
     }
-})
+}
 
 /*
 Not too complicated, but I first tried to create a set of all fresh ingredients, but the number was too high. Then I

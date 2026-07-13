@@ -1,4 +1,4 @@
-import io.kotest.core.spec.style.FunSpec
+import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.matchers.shouldBe
 
 object Day02 {
@@ -13,7 +13,7 @@ object Day02 {
         parse(input).flatMap { r -> r.filter { rx.matches(it.toString()) } }.distinct().sum()
 }
 
-object Day02Test : FunSpec({
+val Day02Test by testSuite {
     val input = lines("Day02")
 
     val sample = """
@@ -31,7 +31,7 @@ object Day02Test : FunSpec({
             two(input) shouldBe 70187097315L
         }
     }
-})
+}
 
 /*
 Much simpler than Day 1!!! Regular expressions are such a powerful helper!

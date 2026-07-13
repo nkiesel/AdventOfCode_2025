@@ -1,10 +1,10 @@
+import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.sequences.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import io.kotest.core.spec.style.FunSpec
 
-class CharAreaTest : FunSpec({
+val CharAreaTest by testSuite {
     test("Simple CharArea") {
         val area = CharArea(10, 10, '.')
         area[1, 1] = '*'
@@ -79,4 +79,4 @@ class CharAreaTest : FunSpec({
         area.manhattan(Point(0, 0), 2) shouldHaveSize 5
         area.manhattan(Point(5, 5), 2) shouldHaveSize 12
     }
-})
+}

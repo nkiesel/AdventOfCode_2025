@@ -1,4 +1,4 @@
-import io.kotest.core.spec.style.FunSpec
+import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.matchers.shouldBe
 
 object Day12 {
@@ -35,7 +35,7 @@ object Day12 {
         .count { it }
 }
 
-object Day12Test : FunSpec({
+val Day12Test by testSuite {
     val input = lines("Day12")
 
     with(Day12) {
@@ -44,7 +44,7 @@ object Day12Test : FunSpec({
             oneA(input) shouldBe 557
         }
     }
-})
+}
 
 /*
 Oh man!  Solution was really simple. I first wrote code that rotated and flipped the present shapes, and then I

@@ -1,6 +1,6 @@
-import io.kotest.core.spec.style.FunSpec
+import de.infix.testBalloon.framework.core.testSuite
 
-class ImageTest : FunSpec({
+val ImageTest  by testSuite {
     test("show sample2 from 2023 Day 10") {
         CharArea(
             """
@@ -62,4 +62,4 @@ class ImageTest : FunSpec({
                 """
         ).png(Tiles.DIGIT)
     }
-})
+}

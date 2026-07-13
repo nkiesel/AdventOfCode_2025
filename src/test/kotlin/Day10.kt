@@ -1,4 +1,4 @@
-import io.kotest.core.spec.style.FunSpec
+import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.matchers.shouldBe
 import kotlin.math.abs
 import kotlin.math.min
@@ -167,7 +167,7 @@ object Day10 {
     }
 }
 
-object Day10Test : FunSpec({
+val Day10Test by testSuite {
     val input = lines("Day10")
 
     val sample = """
@@ -200,7 +200,7 @@ object Day10Test : FunSpec({
             two(input) shouldBe 20298L
         }
     }
-})
+}
 
 /*
 I could not solve part2 of day 10 on my own. I had a working code that solved the sample and the first 5 machines

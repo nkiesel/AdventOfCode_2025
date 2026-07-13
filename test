@@ -1,10 +1,11 @@
 #!/bin/zsh
+# Call using e.g. `./test 03` or `./test 03 two`.
 
 # We use 0-padded day numbers for the code
 # set TZ so that we get the correct day within the first 24 hours of the published puzzle
 dd=${1:-$(TZ=America/New_York date '+%d')}
 [[ ${#dd} -eq 1 ]] && dd="0$dd"
 
-test=${2:-*}
+test="*${2}"
 
-kotest_filter_tests="Day${dd}Test.${test}" ./gradlew test --rerun
+TESTBALLOON_INCLUDE_PATTERNS="Day${dd}Test${test}" ./gradlew test --rerun

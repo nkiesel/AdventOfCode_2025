@@ -1,4 +1,4 @@
-import io.kotest.core.spec.style.FunSpec
+import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.matchers.shouldBe
 
 object Template {
@@ -13,7 +13,7 @@ object Template {
     }
 }
 
-object TemplateTest : FunSpec({
+val TemplateTest by testSuite {
     val input = lines("Template")
 
     val sample = """""".trimIndent().lines()
@@ -24,9 +24,9 @@ object TemplateTest : FunSpec({
 //            one(input) shouldBe 0
         }
 
-        xtest("two") {
+        test("two") {
             two(sample) shouldBe 0
 //            two(input) shouldBe 0
         }
     }
-})
+}

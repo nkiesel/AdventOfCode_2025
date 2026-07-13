@@ -1,8 +1,8 @@
+import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.assertions.throwables.shouldThrowMessage
-import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
-class GraphTest : FunSpec({
+val GraphTest by testSuite {
     test("basic test for BFS") {
         data class TNode(val name: String) {
             override fun toString() = name
@@ -73,4 +73,4 @@ class GraphTest : FunSpec({
 
         shouldThrowMessage("No path from a to z") { shortestPath('a', 'z', 'a' to 'b') }
     }
-})
+}

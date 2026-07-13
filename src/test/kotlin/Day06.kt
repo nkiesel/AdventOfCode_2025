@@ -1,4 +1,4 @@
-import io.kotest.core.spec.style.FunSpec
+import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.matchers.shouldBe
 
 object Day06 {
@@ -39,7 +39,7 @@ object Day06 {
     }
 }
 
-object Day06Test : FunSpec({
+val Day06Test by testSuite {
     val input = lines("Day06")
 
     val sample = """
@@ -60,4 +60,4 @@ object Day06Test : FunSpec({
             two(input) shouldBe 11744693538946L
         }
     }
-})
+}
