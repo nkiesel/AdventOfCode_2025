@@ -1,6 +1,6 @@
 [versions]
 kotest = "6.2.2"
-kotlin = "2.4.0"
+kotlin = "2.4.10"
 plugin-versionsUpdate = "1.1.0"
 testballon = "1.0.1-K2.4.0"
 

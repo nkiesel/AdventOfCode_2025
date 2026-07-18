@@ -30,9 +30,8 @@ kotlin {
         freeCompilerArgs.set(
             listOf(
                 "context-sensitive-resolution",
-                "context-parameters",
-                "nested-type-aliases",
-                "explicit-backing-fields",
+                "collection-literals",
+                "name-based-destructuring=name-mismatch",
             ).map { "-X$it" }
         )
     }
