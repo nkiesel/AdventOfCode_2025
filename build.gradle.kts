@@ -6,10 +6,6 @@ plugins {
 
 version = "2025"
 
-repositories {
-    mavenCentral()
-}
-
 tasks.test {
     minHeapSize = "1g"
     maxHeapSize = "40g"
