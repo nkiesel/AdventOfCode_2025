@@ -1,8 +1,8 @@
 [versions]
 kotest = "6.2.4"
-kotlin = "2.4.10"
+kotlin = "2.4.20"
 plugin-versionsUpdate = "1.1.1"
-testballon = "1.1.0-RC"
+testballon = "1.2.0-Beta1"
 
 [libraries]
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
