@@ -1,7 +1,7 @@
 // from https://github.com/alexhwoods/alexhwoods.com/blob/master/kotlin-algorithms/src/main/kotlin/com/alexhwoods/graphs/datastructures/Graph.kt
 
 fun <T> List<Pair<T, T>>.getUniqueValuesFromPairs(predicate: (T) -> Boolean): Set<T> = this
-    .flatMap { (a, b) -> listOf(a, b) }
+    .flatMap { [a, b] -> [a, b] }
     .filter(predicate)
     .toSet()
 
@@ -59,7 +59,7 @@ fun <T> shortestPath(start: T, end: T, vararg edges: Pair<T, T>): List<T> = shor
 fun <T> shortestPath(start: T, end: T, edges: Map<T, Set<T>>): List<T> {
     val parent = mutableMapOf<T, T>()
     val seen = mutableSetOf(start)
-    val queue = ArrayDeque(listOf(start))
+    val queue = ArrayDeque([start])
     queue@ while (queue.isNotEmpty()) {
         val a = queue.removeFirst()
         for (b in edges.getOrDefault(a, emptySet())) {
@@ -88,7 +88,7 @@ fun <T> bfs(start: T, next: (T) -> Iterable<T>): Sequence<IndexedValue<T>> = wal
 // initially copied from https://github.com/ephemient/aoc2022/blob/main/kt/src/commonMain/kotlin/com/github/ephemient/aoc2022/Day12.kt
 fun <T> walk(start: T, next: (T) -> Iterable<T>, walk: Walk): Sequence<IndexedValue<T>> = sequence {
     val seen = mutableSetOf(start)
-    val queue = ArrayDeque(listOf(IndexedValue(0, start)))
+    val queue = ArrayDeque([IndexedValue(0, start)])
     val enqueue = if (walk == Walk.Breadth) queue::add else queue::addFirst
     while (queue.isNotEmpty()) {
         val a = queue.removeFirst()

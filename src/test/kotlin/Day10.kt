@@ -73,7 +73,7 @@ object Day10 {
 
             // Try to find +/- 1 coefficient
             for (i in equations.indices) {
-                val (_, coeffs) = equations[i]
+                val [_, coeffs] = equations[i]
                 val v = coeffs.entries.find { abs(it.value) == 1L }
                 if (v != null) {
                     pivotEqIndex = i
@@ -85,18 +85,18 @@ object Day10 {
 
             if (pivotEqIndex == -1) break
 
-            val (const, coeffs) = equations.removeAt(pivotEqIndex)
+            val [const, coeffs] = equations.removeAt(pivotEqIndex)
             val defConst = const * pivotCoeff
             val defMap = coeffs.filter { it.key != pivotVar }.mapValues { -it.value * pivotCoeff }
 
-            for ((v, pair) in defined) {
-                val (dConst, dMap) = pair
+            for ([v, pair] in defined) {
+                val [dConst, dMap] = pair
                 if (pivotVar in dMap) {
                     val c = dMap[pivotVar]!!
                     val newMap = dMap.toMutableMap()
                     newMap.remove(pivotVar)
                     val newConst = dConst + c * defConst
-                    for ((dv, dc) in defMap) {
+                    for ([dv, dc] in defMap) {
                         newMap[dv] = newMap.getOrDefault(dv, 0L) + c * dc
                     }
                     defined[v] = newConst to newMap
@@ -106,12 +106,12 @@ object Day10 {
             defined[pivotVar] = defConst to defMap
 
             for (i in equations.indices) {
-                val (eConst, eCoeffs) = equations[i]
+                val [eConst, eCoeffs] = equations[i]
                 if (pivotVar in eCoeffs) {
                     val c = eCoeffs[pivotVar]!!
                     eCoeffs.remove(pivotVar)
                     val newConst = eConst - c * defConst
-                    for ((dv, dc) in defMap) {
+                    for ([dv, dc] in defMap) {
                         eCoeffs[dv] = eCoeffs.getOrDefault(dv, 0L) + c * dc
                     }
                     val toRemove = eCoeffs.filter { it.value == 0L }.keys
@@ -136,15 +136,15 @@ object Day10 {
 
         fun search(index: Int, currentFree: MutableMap<Int, Long>) {
             if (index == freeVars.size) {
-                for ((const, coeffs) in equations) {
-                    val sum = coeffs.entries.sumOf { (v, c) -> currentFree[v]!! * c }
+                for ([const, coeffs] in equations) {
+                    val sum = coeffs.entries.sumOf { [v, c] -> currentFree[v]!! * c }
                     if (sum != const) return
                 }
 
                 var currentTotal = freeVars.sumOf { currentFree[it]!! }
 
-                for ((dConst, dMap) in defined.values) {
-                    val valV = dConst + dMap.entries.sumOf { (v, c) -> currentFree[v]!! * c }
+                for ([dConst, dMap] in defined.values) {
+                    val valV = dConst + dMap.entries.sumOf { [v, c] -> currentFree[v]!! * c }
                     if (valV < 0L) return
                     currentTotal += valV
                 }

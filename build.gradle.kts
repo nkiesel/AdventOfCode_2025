@@ -4,6 +4,12 @@ plugins {
     alias(libs.plugins.testballon)
 }
 
+repositories {
+    gradlePluginPortal()
+    mavenCentral()
+    google()
+}
+
 version = "2025"
 
 tasks.test {

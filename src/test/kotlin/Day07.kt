@@ -13,7 +13,7 @@ object Day07 {
                 val n = p.move(S)
                 if (n in area) {
                     if (area[n] == '^') {
-                        listOf(n.move(W), n.move(E)).filter { it in area }.forEach { next += it }
+                        [n.move(W), n.move(E)].filter { it in area }.forEach { next += it }
                         splits++
                     } else {
                         next += n
@@ -36,7 +36,7 @@ object Day07 {
                 for (i in next.indices) {
                     if (l[i] != '^') {
                         next[i] = timelines[i]
-                        for (j in listOf(i - 1, i + 1)) {
+                        for (j in [i - 1, i + 1]) {
                             if (j in next.indices && l[j] == '^') next[i] += timelines[j]
                         }
                     }

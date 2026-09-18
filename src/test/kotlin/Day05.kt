@@ -11,7 +11,7 @@ object Day05 {
     }
 
     fun one(input: List<String>): Int {
-        val (ranges, ingredients) = parse(input)
+        val [ranges, ingredients] = parse(input)
         return ingredients.count { ingredient -> ranges.any { ingredient in it } }
     }
 

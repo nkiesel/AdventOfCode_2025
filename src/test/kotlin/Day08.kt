@@ -12,16 +12,16 @@ object Day08 {
         val boxes = input.map { P3(it.ints()) }
         val circuits = boxes.map { mutableSetOf(it) }.toMutableList()
         val boxPairs = buildMap {
-            for ((i1, b1) in boxes.withIndex()) {
+            for ([i1, b1] in boxes.withIndex()) {
                 for (i2 in i1 + 1 until boxes.size) {
                     val b2 = boxes[i2]
-                    put(listOf(b1, b2), b1.distance(b2))
+                    put([b1, b2], b1.distance(b2))
                 }
             }
         }.entries.sortedBy { it.value }.map { it.key }
         var connections = 0
         while (true) {
-            val (b1, b2) = boxPairs[connections]
+            val [b1, b2] = boxPairs[connections]
             val c1 = circuits.first { b1 in it }
             val c2 = circuits.first { b2 in it }
             if (c1 != c2) {

@@ -24,7 +24,7 @@ object Day12 {
     }
 
     fun one(input: List<String>): Int {
-        val (shapes, regions) = parse(input)
+        val [shapes, regions] = parse(input)
         return regions.count { r -> r.fits(shapes) }
     }
 

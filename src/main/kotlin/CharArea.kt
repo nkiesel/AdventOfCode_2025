@@ -86,11 +86,11 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
 
     fun move(p: Point, n: Int = 1) = Point(x + p.x * n, y + p.y * n)
 
-    fun neighbors4() = listOf(0 to -1, -1 to 0, 1 to 0, 0 to 1)
-        .map { (dx, dy) -> Point(x + dx, y + dy) }
+    fun neighbors4() = [0 to -1, -1 to 0, 1 to 0, 0 to 1]
+        .map { [dx, dy] -> Point(x + dx, y + dy) }
 
-    fun neighbors8() = listOf(-1 to -1, 0 to -1, 1 to -1, -1 to 0, 1 to 0, -1 to 1, 0 to 1, 1 to 1)
-        .map { (dx, dy) -> Point(x + dx, y + dy) }
+    fun neighbors8() = [-1 to -1, 0 to -1, 1 to -1, -1 to 0, 1 to 0, -1 to 1, 0 to 1, 1 to 1]
+        .map { [dx, dy] -> Point(x + dx, y + dy) }
 
     operator fun minus(other: Point) = Point(x - other.x, y - other.y)
 
@@ -179,12 +179,12 @@ class CharArea(private val area: Array<CharArray>) {
     fun edges(): Sequence<Point> = tiles()
         .filter { (x, y) -> x == xRange.first || x == xRange.last || y == yRange.first || y == yRange.last }
 
-    fun corners() = listOf(
+    fun corners() = [
         Point(xRange.first, yRange.first),
         Point(xRange.first, yRange.last),
         Point(xRange.last, yRange.first),
         Point(xRange.last, yRange.last),
-    )
+    ]
 
     fun first(c: Char): Point {
         val y = area.indexOfFirst { c in it }

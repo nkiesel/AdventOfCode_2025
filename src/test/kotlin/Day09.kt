@@ -9,7 +9,7 @@ object Day09 {
     fun one(input: List<String>): Long {
         val points = parse(input)
         var md = 0L
-        for ((i, p1) in points.withIndex()) {
+        for ([i, p1] in points.withIndex()) {
             for (j in i + 1 until points.size) {
                 val p2 = points[j]
                 val d = ((p1.x delta p2.x) + 1).toLong() * ((p1.y delta p2.y) + 1)
@@ -25,13 +25,13 @@ object Day09 {
         val maxX = red.maxOf { it.x }
         val minY = red.minOf { it.y }
         val maxY = red.maxOf { it.y }
-        val rowSets = (minY..maxY).associateWith { y -> mutableSetOf<Int>() }
-        val colSets = (minX..maxX).associateWith { y -> mutableSetOf<Int>() }
+        val rowSets = (minY..maxY).associateWith { mutableSetOf<Int>() }
+        val colSets = (minX..maxX).associateWith { mutableSetOf<Int>() }
 
 //        println("red: ${red.size}")
         val green = buildList {
             var dir = '.'
-            for ((p1, p2) in (red + red[0]).zipWithNext()) {
+            for ([p1, p2] in (red + red[0]).zipWithNext()) {
                 if (p1.x == p2.x) {
                     for (y in min(p1.y, p2.y) + 1 until max(p1.y, p2.y)) {
                         add(Point(p1.x, y))
@@ -100,7 +100,7 @@ object Day09 {
 //        }
 
         val recs = buildMap {
-            for ((i, p1) in red.withIndex()) {
+            for ([i, p1] in red.withIndex()) {
                 for (j in i + 1 until red.size) {
                     val p2 = red[j]
                     val d = ((p1.x delta p2.x) + 1).toLong() * ((p1.y delta p2.y) + 1)
@@ -109,7 +109,7 @@ object Day09 {
             }
         }.entries.sortedByDescending { it.value }
 //        println("recs: ${recs.size}")
-        recs.forEach { (p, size) ->
+        recs.forEach { [p, size] ->
             if (allRedOrGreen(p.first, p.second)) {
 //                println("p1: ${p.first} p2: ${p.second} size: $size")
                 return size

@@ -8,18 +8,18 @@ object Day11 {
     private data class Path(val dev: String, val count: Long)
 
     private fun count(devs: Map<String, List<String>>, start: String, end: String): Long {
-        var paths = listOf(Path(start, 1))
+        var paths = [Path(start, 1)]
         var count = 0L
         while (true) {
             val next = buildList {
-                for (n in paths) {
-                    for (p in devs[n.dev].orEmpty()) {
-                        if (p == end) count += n.count else add(Path(p, n.count))
+                for ([dev, count1] in paths) {
+                    for (p in devs[dev].orEmpty()) {
+                        if (p == end) count += count1 else add(Path(p, count1))
                     }
                 }
             }
             if (next.isEmpty()) return count
-            paths = next.groupBy { it.dev }.map { (dev, counts) -> Path(dev, counts.sumOf { it.count }) }
+            paths = next.groupBy { it.dev }.map { [dev, counts] -> Path(dev, counts.sumOf { it.count }) }
         }
     }
 

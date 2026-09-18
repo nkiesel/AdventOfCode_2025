@@ -33,7 +33,7 @@ val UtilKtTest  by testSuite {
     }
 
     test("permutations") {
-        val list = listOf("a", "b", "c")
+        val list = ["a", "b", "c"]
         val permutations = list.permutations().toList()
         println(permutations)
         permutations shouldHaveSize list.size.factorial().toInt()
@@ -63,7 +63,7 @@ val UtilKtTest  by testSuite {
     }
 
     test("chunkedBy") {
-        listOf(3, 1, 4, 1, 5, 9).chunkedBy { it % 2 == 0 } shouldBe listOf(listOf(3, 1), listOf(1, 5, 9))
+        [3, 1, 4, 1, 5, 9].chunkedBy { it % 2 == 0 } shouldBe [[3, 1], [1, 5, 9]]
     }
 
     test("countingMap") {
@@ -86,7 +86,7 @@ val UtilKtTest  by testSuite {
     }
 
     test("countingMapWithInit") {
-        val map = CountingMap(listOf("a", "b", "c", "d"))
+        val map = CountingMap(["a", "b", "c", "d"])
         map.inc("a")
         map.inc("b")
         map.inc("c", 3L)
@@ -100,7 +100,7 @@ val UtilKtTest  by testSuite {
     }
 
     test("countingMapWithInitAndStart") {
-        val map = CountingMap(listOf("a", "b", "c", "d"), 0)
+        val map = CountingMap(["a", "b", "c", "d"], 0)
         map.inc("a")
         map.inc("b")
         map.inc("c", 3L)
@@ -127,10 +127,10 @@ val UtilKtTest  by testSuite {
     }
 
     test("numbers") {
-        "a3b1c4d".ints() shouldBe listOf(3, 1, 4)
-        "-1,3-".ints() shouldBe listOf(-1, 3)
-        "a3b1c4d".longs() shouldBe listOf(3L, 1L, 4L)
-        "-1,3-".longs() shouldBe listOf(-1L, 3L)
+        "a3b1c4d".ints() shouldBe [3, 1, 4]
+        "-1,3-".ints() shouldBe [-1, 3]
+        "a3b1c4d".longs() shouldBe [3L, 1L, 4L]
+        "-1,3-".longs() shouldBe [-1L, 3L]
     }
 
     test("lcm") {
@@ -140,36 +140,36 @@ val UtilKtTest  by testSuite {
         lcm(10, 10) shouldBe 10
         lcm(101, 103) shouldBe 101 * 103
         lcm(101 * 3, 103 * 6) shouldBe 101 * 103 * 6
-        listOf(2, 3, 4, 5, 6, 9, 10, 12, 100, 150).reduce { a, b -> lcm(a, b) } shouldBe 900
+        [2, 3, 4, 5, 6, 9, 10, 12, 100, 150].reduce { a, b -> lcm(a, b) } shouldBe 900
         lcm(listOf(2, 3, 4, 5, 6, 9, 10, 12, 100, 150)) shouldBe 900
     }
 
     test("minMax") {
-        listOf(3, 1, 4, 1, 5, 9).minMax() shouldBe intArrayOf(1, 9)
-        val (i, a) = listOf(3, 1, 4).minMax()
+        [3, 1, 4, 1, 5, 9].minMax() shouldBe intArrayOf(1, 9)
+        val [i, a] = [3, 1, 4].minMax()
         i shouldBe 1
         a shouldBe 4
-        listOf(3L, 1L, 4L, 1L, 5L, 9L).minMax() shouldBe longArrayOf(1L, 9L)
+        [3L, 1L, 4L, 1L, 5L, 9L].minMax() shouldBe longArrayOf(1L, 9L)
     }
 
     test("minMax using multiFold") {
-        fun minMax(l: List<Int>) = l.multiFold(listOf(Int.MAX_VALUE, Int.MIN_VALUE), listOf(::min, ::max))
-        minMax(listOf(3, 1, 4, 1, 5, 9)) shouldBe intArrayOf(1, 9)
+        fun minMax(l: List<Int>) = l.multiFold([Int.MAX_VALUE, Int.MIN_VALUE], [::min, ::max])
+        minMax([3, 1, 4, 1, 5, 9]) shouldBe intArrayOf(1, 9)
     }
 
     test("minMax using multiReduce") {
         fun minMax(l: List<Int>) = l.multiReduce(::min, ::max)
-        minMax(listOf(3, 1, 4, 1, 5, 9)) shouldBe intArrayOf(1, 9)
+        minMax([3, 1, 4, 1, 5, 9]) shouldBe intArrayOf(1, 9)
     }
 
     test("multiFold") {
-        listOf(3, 1, 4).multiFold(listOf(Int.MAX_VALUE, Int.MIN_VALUE), listOf(::min, ::max)) shouldBe listOf(1, 4)
+        [3, 1, 4].multiFold([Int.MAX_VALUE, Int.MIN_VALUE], [::min, ::max]) shouldBe [1, 4]
     }
 
     test("multiReduce") {
-        listOf(3, 1, 4).reduce(::min) shouldBe 1
-        listOf(3, 1, 4).reduce(::max) shouldBe 4
-        listOf(3, 1, 4).multiReduce(::min, ::max) shouldBe listOf(1, 4)
+        [3, 1, 4].reduce(::min) shouldBe 1
+        [3, 1, 4].reduce(::max) shouldBe 4
+        [3, 1, 4].multiReduce(::min, ::max) shouldBe [1, 4]
     }
 
     test("manhattanDistance") {

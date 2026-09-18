@@ -63,17 +63,17 @@ fun combinations(parts: Int, total: Int = 100): Sequence<List<Int>> = sequence {
  * This generates a list of the coordinates of the 4 neighbors of a cell in a 2-dimensional generic array
  */
 fun <T> Array<Array<T>>.neighbors4(x: Int, y: Int): List<IntPair> =
-    listOf(-1 to 0, 1 to 0, 0 to -1, 0 to 1)
-        .map { (dx, dy) -> x + dx to y + dy }
-        .filter { (cx, cy) -> cx in this[0].indices && cy in this.indices }
+    [-1 to 0, 1 to 0, 0 to -1, 0 to 1]
+        .map { [dx, dy] -> x + dx to y + dy }
+        .filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
 
 /**
  * This generates a list of the coordinates of the 4 neighbors of a cell in a 2-dimensional Int array
  */
 fun Array<IntArray>.neighbors4(x: Int, y: Int): List<IntPair> =
-    listOf(-1 to 0, 1 to 0, 0 to -1, 0 to 1)
-        .map { (dx, dy) -> x + dx to y + dy }
-        .filter { (cx, cy) -> cx in this[0].indices && cy in this.indices }
+    [-1 to 0, 1 to 0, 0 to -1, 0 to 1]
+        .map { [dx, dy] -> x + dx to y + dy }
+        .filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
 
 /**
  * This generates a list of the coordinates of the 4 neighbors of a cell in a 2-dimensional Char array
@@ -81,25 +81,25 @@ fun Array<IntArray>.neighbors4(x: Int, y: Int): List<IntPair> =
 fun Array<CharArray>.neighbors4(xy: IntPair) = neighbors4(xy.first, xy.second)
 
 fun Array<CharArray>.neighbors4(x: Int, y: Int): List<IntPair> =
-    listOf(-1 to 0, 1 to 0, 0 to -1, 0 to 1)
-        .map { (dx, dy) -> x + dx to y + dy }
-        .filter { (cx, cy) -> cx in this[0].indices && cy in this.indices }
+    [-1 to 0, 1 to 0, 0 to -1, 0 to 1]
+        .map { [dx, dy] -> x + dx to y + dy }
+        .filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
 
 /**
  * This generates a list of the coordinates of the 8 neighbors of a cell in a 2-dimensional generic array
  */
 fun <T> Array<Array<T>>.neighbors8(x: Int, y: Int): List<IntPair> =
-    listOf(-1 to -1, -1 to 0, -1 to 1, 0 to -1, 0 to 1, 1 to -1, 1 to 0, 1 to 1)
-        .map { (dx, dy) -> x + dx to y + dy }
-        .filter { (cx, cy) -> cx in this[0].indices && cy in this.indices }
+    [-1 to -1, -1 to 0, -1 to 1, 0 to -1, 0 to 1, 1 to -1, 1 to 0, 1 to 1]
+        .map { [dx, dy] -> x + dx to y + dy }
+        .filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
 
 /**
  * This generates a list of the coordinates of the 8 neighbors of a cell in a 2-dimensional Int array
  */
 fun Array<IntArray>.neighbors8(x: Int, y: Int): List<IntPair> =
-    listOf(-1 to -1, -1 to 0, -1 to 1, 0 to -1, 0 to 1, 1 to -1, 1 to 0, 1 to 1)
-        .map { (dx, dy) -> x + dx to y + dy }
-        .filter { (cx, cy) -> cx in this[0].indices && cy in this.indices }
+    [-1 to -1, -1 to 0, -1 to 1, 0 to -1, 0 to 1, 1 to -1, 1 to 0, 1 to 1]
+        .map { [dx, dy] -> x + dx to y + dy }
+        .filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
 
 /**
  * Breaks a list into a list of lists.  Elements which are delimiters between the lists are not included in the result
@@ -155,7 +155,7 @@ class CountingMap<T>(
     fun values() = m.values.map { it.value }
 
     override fun toString(): String {
-        return entries.joinToString(", ", prefix = "[", postfix = "]") { (key, count) -> "$key: ${count.value}" }
+        return entries.joinToString(", ", prefix = "[", postfix = "]") { [key, count] -> "$key: ${count.value}" }
     }
 }
 
