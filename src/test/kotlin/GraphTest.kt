@@ -37,11 +37,11 @@ val GraphTest by testSuite {
             override fun toString() = name
         }
 
-        val n1 = TNode("one", emptySet())
-        val n5 = TNode("five", emptySet())
-        val n2 = TNode("two", setOf(n1, n5))
-        val n3 = TNode("three", setOf(n2))
-        val n4 = TNode("four", setOf(n1, n3))
+        val n1 = TNode("one", [])
+        val n5 = TNode("five", [])
+        val n2 = TNode("two", [n1, n5])
+        val n3 = TNode("three", [n2])
+        val n4 = TNode("four", [n1, n3])
         bfs(n4) { it.next }.forEach { println(it) }
     }
 
@@ -50,11 +50,11 @@ val GraphTest by testSuite {
             override fun toString() = name
         }
 
-        val n1 = TNode("one", emptySet())
-        val n5 = TNode("five", emptySet())
-        val n2 = TNode("two", setOf(n1, n5))
-        val n3 = TNode("three", setOf(n2))
-        val n4 = TNode("four", setOf(n1, n3))
+        val n1 = TNode("one", [])
+        val n5 = TNode("five", [])
+        val n2 = TNode("two", [n1, n5])
+        val n3 = TNode("three", [n2])
+        val n4 = TNode("four", [n1, n3])
         dfs(n4) { it.next }.forEach { println(it) }
     }
 
