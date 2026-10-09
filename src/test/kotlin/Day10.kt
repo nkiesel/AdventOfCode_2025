@@ -1,7 +1,6 @@
 import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.matchers.shouldBe
 import kotlin.math.abs
-import kotlin.math.min
 
 object Day10 {
     private data class Machine(val target: List<Boolean>, val buttons: List<List<Boolean>>, val joltage: List<Int>)
@@ -36,7 +35,7 @@ object Day10 {
                         click(lights, machine, i)
                         count++
                         if (lights == machine.target) {
-                            clicks = min(clicks, count)
+                            clicks = minOf(clicks, count)
                             if (clicks == 1) break@machine
                         }
                         if (count >= clicks) break

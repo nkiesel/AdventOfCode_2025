@@ -1,7 +1,5 @@
 import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.matchers.shouldBe
-import kotlin.math.max
-import kotlin.math.min
 
 object Day09 {
     private fun parse(input: List<String>) = input.map { it.ints().let { Point(it[0], it[1]) } }
@@ -13,7 +11,7 @@ object Day09 {
             for (j in i + 1 until points.size) {
                 val p2 = points[j]
                 val d = ((p1.x delta p2.x) + 1).toLong() * ((p1.y delta p2.y) + 1)
-                md = max(d, md)
+                md = maxOf(d, md)
             }
         }
         return md
@@ -33,7 +31,7 @@ object Day09 {
             var dir = '.'
             for ([p1, p2] in (red + red[0]).zipWithNext()) {
                 if (p1.x == p2.x) {
-                    for (y in min(p1.y, p2.y) + 1 until max(p1.y, p2.y)) {
+                    for (y in minOf(p1.y, p2.y) + 1 until maxOf(p1.y, p2.y)) {
                         add(Point(p1.x, y))
                         rowSets[y]!! += p1.x
                     }
@@ -42,7 +40,7 @@ object Day09 {
                     }
                     dir = '|'
                 } else if (p1.y == p2.y) {
-                    for (x in min(p1.x, p2.x) + 1 until max(p1.x, p2.x)) {
+                    for (x in minOf(p1.x, p2.x) + 1 until maxOf(p1.x, p2.x)) {
                         add(Point(x, p1.y))
                         colSets[x]!! += p1.y
                     }

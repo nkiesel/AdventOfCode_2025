@@ -2,16 +2,14 @@ import java.math.BigInteger
 import java.security.MessageDigest
 import kotlin.io.path.Path
 import kotlin.io.path.readLines
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
+import kotlin.math.absoluteValue
 
 typealias IntPair = Pair<Int, Int>
 
 fun lines(day: String) = Path("input/$day.txt").readLines()
 
 /**
- * Creates a sequence of permutations. number of permutations of a list of length n is n!. This is an implementation
+ * Creates a sequence of permutations. The number of permutations of a list of length n is n!. This is an implementation
  * of the approach described by Dijkstra in 1976. It creates an array of indices, and then in every iteration returns
  * the list of items ordered by the index array and computes the next permutation of the index array.
  */
@@ -59,21 +57,20 @@ fun combinations(parts: Int, total: Int = 100): Sequence<List<Int>> = sequence {
     }
 }
 
+private val n4 = [0 to -1, -1 to 0, 1 to 0, 0 to 1]
+private val n8 = [-1 to -1, 0 to -1, 1 to -1, -1 to 0, 1 to 0, -1 to 1, 0 to 1, 1 to 1]
+
 /**
  * This generates a list of the coordinates of the 4 neighbors of a cell in a 2-dimensional generic array
  */
 fun <T> Array<Array<T>>.neighbors4(x: Int, y: Int): List<IntPair> =
-    [-1 to 0, 1 to 0, 0 to -1, 0 to 1]
-        .map { [dx, dy] -> x + dx to y + dy }
-        .filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
+    n4.map { [dx, dy] -> x + dx to y + dy }.filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
 
 /**
  * This generates a list of the coordinates of the 4 neighbors of a cell in a 2-dimensional Int array
  */
 fun Array<IntArray>.neighbors4(x: Int, y: Int): List<IntPair> =
-    [-1 to 0, 1 to 0, 0 to -1, 0 to 1]
-        .map { [dx, dy] -> x + dx to y + dy }
-        .filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
+    n4.map { [dx, dy] -> x + dx to y + dy }.filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
 
 /**
  * This generates a list of the coordinates of the 4 neighbors of a cell in a 2-dimensional Char array
@@ -81,25 +78,19 @@ fun Array<IntArray>.neighbors4(x: Int, y: Int): List<IntPair> =
 fun Array<CharArray>.neighbors4(xy: IntPair) = neighbors4(xy.first, xy.second)
 
 fun Array<CharArray>.neighbors4(x: Int, y: Int): List<IntPair> =
-    [-1 to 0, 1 to 0, 0 to -1, 0 to 1]
-        .map { [dx, dy] -> x + dx to y + dy }
-        .filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
+    n4.map { [dx, dy] -> x + dx to y + dy }.filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
 
 /**
  * This generates a list of the coordinates of the 8 neighbors of a cell in a 2-dimensional generic array
  */
 fun <T> Array<Array<T>>.neighbors8(x: Int, y: Int): List<IntPair> =
-    [-1 to -1, -1 to 0, -1 to 1, 0 to -1, 0 to 1, 1 to -1, 1 to 0, 1 to 1]
-        .map { [dx, dy] -> x + dx to y + dy }
-        .filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
+    n8.map { [dx, dy] -> x + dx to y + dy }.filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
 
 /**
  * This generates a list of the coordinates of the 8 neighbors of a cell in a 2-dimensional Int array
  */
 fun Array<IntArray>.neighbors8(x: Int, y: Int): List<IntPair> =
-    [-1 to -1, -1 to 0, -1 to 1, 0 to -1, 0 to 1, 1 to -1, 1 to 0, 1 to 1]
-        .map { [dx, dy] -> x + dx to y + dy }
-        .filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
+    n8.map { [dx, dy] -> x + dx to y + dy }.filter { [cx, cy] -> cx in this[0].indices && cy in this.indices }
 
 /**
  * Breaks a list into a list of lists.  Elements which are delimiters between the lists are not included in the result
@@ -246,7 +237,7 @@ fun <T> Collection<T>.powerSetSeq(): Sequence<Set<T>> {
  */
 fun Collection<Int>.minMax(): IntArray {
     return fold(intArrayOf(Int.MAX_VALUE, Int.MIN_VALUE)) { acc, i ->
-        acc[0] = min(acc[0], i); acc[1] = max(acc[1], i); acc
+        acc[0] = minOf(acc[0], i); acc[1] = maxOf(acc[1], i); acc
     }
 }
 
@@ -255,7 +246,7 @@ fun Collection<Int>.minMax(): IntArray {
  */
 fun Collection<Long>.minMax(): LongArray {
     return fold(longArrayOf(Long.MAX_VALUE, Long.MIN_VALUE)) { acc, i ->
-        acc[0] = min(acc[0], i); acc[1] = max(acc[1], i); acc
+        acc[0] = minOf(acc[0], i); acc[1] = maxOf(acc[1], i); acc
     }
 }
 
@@ -264,7 +255,7 @@ fun Collection<Long>.minMax(): LongArray {
  */
 fun Collection<Double>.minMax(): DoubleArray {
     return fold(doubleArrayOf(Double.MAX_VALUE, Double.MIN_VALUE)) { acc, i ->
-        acc[0] = min(acc[0], i); acc[1] = max(acc[1], i); acc
+        acc[0] = minOf(acc[0], i); acc[1] = maxOf(acc[1], i); acc
     }
 }
 
@@ -273,7 +264,7 @@ fun Collection<Double>.minMax(): DoubleArray {
  */
 fun Collection<Float>.minMax(): FloatArray {
     return fold(floatArrayOf(Float.MAX_VALUE, Float.MIN_VALUE)) { acc, i ->
-        acc[0] = min(acc[0], i); acc[1] = max(acc[1], i); acc
+        acc[0] = minOf(acc[0], i); acc[1] = maxOf(acc[1], i); acc
     }
 }
 
@@ -305,8 +296,8 @@ fun String.longs(withNegative: Boolean = true) = Regex(if (withNegative) """-?\d
     .map { it.value.toLong() }
     .toList()
 
-infix fun Int.delta(other: Int) = abs(this - other)
-infix fun Long.delta(other: Long) = abs(this - other)
+infix fun Int.delta(other: Int) = (this - other).absoluteValue
+infix fun Long.delta(other: Long) = (this - other).absoluteValue
 
 fun List<Int>.product() = reduceOrNull(Int::times) ?: 0
 fun List<Long>.product() = reduceOrNull(Long::times) ?: 0

@@ -1,7 +1,5 @@
 import de.infix.testBalloon.framework.core.testSuite
 import io.kotest.matchers.shouldBe
-import kotlin.math.max
-import kotlin.math.min
 
 object Day05 {
     private fun parse(input: List<String>): Pair<Set<LongRange>, Set<Long>> {
@@ -24,7 +22,7 @@ object Day05 {
                 if (o != null) {
                     ranges.remove(r)
                     ranges.remove(o)
-                    ranges.add(min(r.first, o.first)..max(r.last, o.last))
+                    ranges.add(minOf(r.first, o.first)..maxOf(r.last, o.last))
                     merged = true
                     break
                 }
