@@ -1,4 +1,5 @@
 import de.infix.testBalloon.framework.core.testSuite
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.maps.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -30,6 +31,17 @@ val UtilKtTest  by testSuite {
 
         val ps2 = s.powerSet().toList()
         ps1 shouldBe ps2
+    }
+
+    test("Int.pow") {
+        2.pow(0) shouldBe 1L
+        2.pow(1) shouldBe 2L
+        2.pow(2) shouldBe 4L
+        2.pow(3) shouldBe 8L
+        2.pow(16) shouldBe 65536L
+        3.pow(16) shouldBe 43046721L
+        shouldThrow<ArithmeticException> { 4.pow(66) }
+        shouldThrow<IllegalArgumentException> { 4.pow(-1) }
     }
 
     test("permutations") {

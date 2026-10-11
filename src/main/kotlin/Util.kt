@@ -1,3 +1,4 @@
+import java.lang.Math.multiplyExact
 import java.math.BigInteger
 import java.security.MessageDigest
 import kotlin.io.path.Path
@@ -232,6 +233,34 @@ fun <T> Collection<T>.powerSetSeq(): Sequence<Set<T>> {
     }
 }
 
+fun Int.pow(n: Int): Long {
+    require(n >= 0) { "Negative exponents are not supported for integer powers." }
+
+    if (this == 2 && n in 0..62) return 1L shl n
+    if (n == 0) return 1L
+    if (this == 0) return 0L
+    if (this == 1) return 1L
+    if (this == -1) return if (n % 2 == 0) 1L else -1L
+
+    if (n > 64) throw ArithmeticException("Calculation of $this.pow($n) exceeded maximum capacity of Long.MAX_VALUE")
+
+    var baseLong = this.toLong()
+    if (n == 1) return baseLong
+    var result = 1L
+    var exp = n
+
+    try {
+        while (true) {
+            if (exp % 2 == 1) result = multiplyExact(result, baseLong)
+            exp /= 2
+            if (exp == 0) return result
+            baseLong = multiplyExact(baseLong, baseLong)
+        }
+    } catch (_: ArithmeticException) {
+        throw ArithmeticException("Calculation of $this.pow($n) exceeded maximum capacity of Long.MAX_VALUE")
+    }
+
+}
 /**
  * Computes min and max of an Int collection in a single loop
  */
