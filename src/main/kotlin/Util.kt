@@ -259,8 +259,8 @@ fun Int.pow(n: Int): Long {
     } catch (_: ArithmeticException) {
         throw ArithmeticException("Calculation of $this.pow($n) exceeded maximum capacity of Long.MAX_VALUE")
     }
-
 }
+
 /**
  * Computes min and max of an Int collection in a single loop
  */
@@ -338,4 +338,21 @@ val md: MessageDigest = MessageDigest.getInstance("MD5")
 
 fun String.md5(): String {
     return BigInteger(1, md.digest(this.toByteArray())).toString(16).padStart(32, '0')
+}
+
+fun primes(limit: Int): List<Int> {
+    val isPrime = BooleanArray(limit + 1) { true }
+    val primes = mutableListOf<Int>()
+
+    for (p in 2..limit) {
+        if (isPrime[p]) {
+            primes.add(p)
+            var i = p * p
+            while (i <= limit) {
+                isPrime[i] = false
+                i += p
+            }
+        }
+    }
+    return primes
 }

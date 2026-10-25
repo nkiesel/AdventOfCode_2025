@@ -206,4 +206,9 @@ val UtilKtTest  by testSuite {
         p3.x shouldBe -3
         p3.y shouldBe -5
     }
+
+    test("primes") {
+        primes(1000).size shouldBe 168
+        primes(10) shouldBe listOf(2, 3, 5, 7)
+    }
 }
