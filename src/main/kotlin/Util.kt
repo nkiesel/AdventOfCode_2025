@@ -343,13 +343,14 @@ fun String.md5(): String {
 fun primes(limit: Int): List<Int> {
     val isPrime = BooleanArray(limit + 1) { true }
     val primes = mutableListOf<Int>()
+    val longLimit = limit.toLong()
 
     for (p in 2..limit) {
         if (isPrime[p]) {
             primes.add(p)
-            var i = p * p
-            while (i <= limit) {
-                isPrime[i] = false
+            var i = p.toLong() * p
+            while (i <= longLimit) {
+                isPrime[i.toInt()] = false
                 i += p
             }
         }
