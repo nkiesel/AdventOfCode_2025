@@ -40,8 +40,34 @@ val UtilKtTest  by testSuite {
         2.pow(3) shouldBe 8L
         2.pow(16) shouldBe 65536L
         3.pow(16) shouldBe 43046721L
+        (-1).pow(0) shouldBe 1L
+        (-1).pow(1) shouldBe -1L
+        (-1).pow(2) shouldBe 1L
+        (-1).pow(3) shouldBe -1L
         shouldThrow<ArithmeticException> { 4.pow(66) }
         shouldThrow<IllegalArgumentException> { 4.pow(-1) }
+    }
+
+    test("Int.isOdd") {
+        0.isOdd shouldBe false
+        1.isOdd shouldBe true
+        2.isOdd shouldBe false
+        3.isOdd shouldBe true
+        4.isOdd shouldBe false
+        5.isOdd shouldBe true
+        (-4).isOdd shouldBe false
+        (-5).isOdd shouldBe true
+    }
+
+    test("Int.isEven") {
+        0.isEven shouldBe true
+        1.isEven shouldBe false
+        2.isEven shouldBe true
+        3.isEven shouldBe false
+        4.isEven shouldBe true
+        5.isEven shouldBe false
+        (-4).isEven shouldBe true
+        (-5).isEven shouldBe false
     }
 
     test("permutations") {
@@ -75,7 +101,7 @@ val UtilKtTest  by testSuite {
     }
 
     test("chunkedBy") {
-        [3, 1, 4, 1, 5, 9].chunkedBy { it % 2 == 0 } shouldBe [[3, 1], [1, 5, 9]]
+        [3, 1, 4, 1, 5, 9].chunkedBy { it.isEven } shouldBe [[3, 1], [1, 5, 9]]
     }
 
     test("countingMap") {

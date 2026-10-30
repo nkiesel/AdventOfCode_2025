@@ -65,7 +65,7 @@ object Day09 {
         val rows = rowSets.mapValues { r -> r.value.sorted().toList() }
         val cols = colSets.mapValues { r -> r.value.sorted().toList() }
 
-        fun odd(list: List<Int>, v: Int) = list.count { it < v } % 2 == 1 || list.count { it > v } % 2 == 1
+        fun odd(list: List<Int>, v: Int) = list.count { it < v }.isOdd || list.count { it > v }.isOdd
 
         fun isRedOrGreen(p: Point) =
             p in redOrGreen || p.x in minX..maxX && p.y in minY..maxY && odd(rows[p.y]!!, p.x) && odd(cols[p.x]!!, p.y)

@@ -1,4 +1,3 @@
-import java.lang.Math.multiplyExact
 import java.math.BigInteger
 import java.security.MessageDigest
 import kotlin.io.path.Path
@@ -233,6 +232,18 @@ fun <T> Collection<T>.powerSetSeq(): Sequence<Set<T>> {
     }
 }
 
+val Int.isOdd: Boolean
+    get() = this % 2 != 0
+
+val Int.isEven: Boolean
+    get() = this % 2 == 0
+
+val Long.isOdd: Boolean
+    get() = this % 2L != 0L
+
+val Long.isEven: Boolean
+    get() = this % 2L == 0L
+
 fun Int.pow(n: Int): Long {
     require(n >= 0) { "Negative exponents are not supported for integer powers." }
 
@@ -240,21 +251,21 @@ fun Int.pow(n: Int): Long {
     if (n == 0) return 1L
     if (this == 0) return 0L
     if (this == 1) return 1L
-    if (this == -1) return if (n % 2 == 0) 1L else -1L
+    if (this == -1) return if (n.isEven) 1L else -1L
 
     if (n > 64) throw ArithmeticException("Calculation of $this.pow($n) exceeded maximum capacity of Long.MAX_VALUE")
 
-    var baseLong = this.toLong()
-    if (n == 1) return baseLong
+    var base = this.toLong()
+    if (n == 1) return base
     var result = 1L
     var exp = n
 
     try {
         while (true) {
-            if (exp % 2 == 1) result = multiplyExact(result, baseLong)
+            if (exp.isOdd) result *= base
             exp /= 2
             if (exp == 0) return result
-            baseLong = multiplyExact(baseLong, baseLong)
+            base *= base
         }
     } catch (_: ArithmeticException) {
         throw ArithmeticException("Calculation of $this.pow($n) exceeded maximum capacity of Long.MAX_VALUE")
