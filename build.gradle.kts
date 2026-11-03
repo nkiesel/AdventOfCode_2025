@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.versions.update)
-    alias(libs.plugins.testballon)
+    alias(libs.plugins.testBalloon)
 }
 
 repositories {
@@ -41,7 +41,7 @@ kotlin {
     sourceSets {
         test {
             dependencies {
-                implementation(libs.testballon.framework.core)
+                implementation(libs.testBalloon.framework.core)
                 implementation(libs.testBalloon.integration.kotest.assertions)
                 implementation(libs.kotest.assertions.core)
             }
