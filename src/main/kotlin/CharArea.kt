@@ -37,7 +37,7 @@ enum class Direction {
     }
 
     companion object {
-        fun from(char: Char) = when (char) {
+        operator fun invoke(char: Char) = when (char) {
             '^' -> N
             '>' -> E
             'v' -> S
@@ -45,7 +45,7 @@ enum class Direction {
             else -> error("Char '$char' cannot be converted to a Direction")
         }
 
-        fun from(d: String) = when (d.lowercase()) {
+        operator fun invoke(d: String) = when (d.lowercase()) {
             "n" -> N
             "ne" -> NE
             "e" -> E
