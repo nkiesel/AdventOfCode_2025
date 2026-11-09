@@ -1,5 +1,5 @@
 [versions]
-gameutils = "1.0.3"
+gameutils = "1.1.0"
 kotest = "6.2.6"
 kotlin = "2.4.21"
 plugin-versionsUpdate = "1.1.2"
