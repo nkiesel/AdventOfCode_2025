@@ -8,3 +8,4 @@ pluginManagement {
     }
 }
 
+includeBuild("/home/nkiesel/GameUtils")

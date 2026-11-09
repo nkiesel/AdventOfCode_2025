@@ -6,6 +6,7 @@ plugins {
 
 repositories {
     gradlePluginPortal()
+    mavenLocal()
     mavenCentral()
     google()
 }
@@ -41,6 +42,7 @@ kotlin {
     sourceSets {
         test {
             dependencies {
+                implementation(libs.nkiesel.gameutils)
                 implementation(libs.testBalloon.framework.core)
                 implementation(libs.testBalloon.integration.kotest.assertions)
                 implementation(libs.kotest.assertions.core)

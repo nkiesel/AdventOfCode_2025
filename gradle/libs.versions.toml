@@ -1,4 +1,5 @@
 [versions]
+gameutils = "1.0.3"
 kotest = "6.2.6"
 kotlin = "2.4.21"
 plugin-versionsUpdate = "1.1.2"
@@ -6,6 +7,7 @@ testBalloon = "1.2.0"
 
 [libraries]
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+nkiesel-gameutils = { module = "nkiesel:GameUtils", version.ref = "gameutils" }
 testBalloon-framework-core = { module = "de.infix.testBalloon:testBalloon-framework-core", version.ref = "testBalloon" }
 testBalloon-integration-kotest-assertions = { module = "de.infix.testBalloon:testBalloon-integration-kotest-assertions", version.ref = "testBalloon" }
 
